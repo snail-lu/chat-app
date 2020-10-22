@@ -33,50 +33,47 @@ class Login extends Component {
             return <Redirect to={redirectTo} />
         }
         return (
-            <div>
-                <WingBlank>
-                    <h2 className={styles.top_title}>登录BOSS智聘</h2>
-                    <Tabs tabs={tabs}
-                        initialPage={0}
-                        onChange={(tab, index) => { console.log('onChange', index, tab); }}
-                        onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
-                        >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
-                            <List>
-                                <WhiteSpace />
-                                { msg ? <div className="error-msg">{msg}</div> : null }
-                                <InputItem type="text" onChange={val=>{this.handleChange('username',val)}} placeholder="请输入用户名">用户名:</InputItem>
-                                <WhiteSpace />
-                                <InputItem type="password" onChange={val=>{this.handleChange('password',val)}} placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码:</InputItem>
-                                <WhiteSpace />
-                                <Button type="default" size="small">点击进行验证</Button>
-                                <WhiteSpace />
-                                <Button type="primary" size="small" onClick={this.login}>登录</Button>
-                                <WhiteSpace />
-                                <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
-                                <WhiteSpace />
-                            </List>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
-                            <List>
-                                <WhiteSpace />
-                                { msg ? <div className="error-msg">{msg}</div> : null }
-                                <InputItem type="text" onChange={val=>{this.handleChange('username',val)}} placeholder="手机号">手机号:</InputItem>
-                                <WhiteSpace />
-                                <Button type="default" size="small">点击进行验证</Button>
-                                <WhiteSpace />
-                                <InputItem type="password" onChange={val=>{this.handleChange('password',val)}} placeholder="短信验证码">验证码:</InputItem>
-                                <WhiteSpace />
-                                <Button type="primary" size="small" onClick={this.login}>登录</Button>
-                                <WhiteSpace />
-                                <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
-                                <WhiteSpace />
-                            </List>
-                        </div>
-                    </Tabs>
-                    
-                </WingBlank>
-            </div>
+            <WingBlank>
+                <WhiteSpace size="xl" />
+                <h2 className={styles.top_title}>登录BOSS智聘</h2>
+                <WhiteSpace size="xl" />
+                <Tabs tabs={tabs}
+                    initialPage={0}
+                    onChange={(tab, index) => { console.log('onChange', index, tab); }}
+                    onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+                    >
+                    <div className={styles.tab_item}>
+                        <List>
+                            <WhiteSpace />
+                            { msg ? <div className="error-msg">{msg}</div> : null }
+                            <InputItem type="text" onChange={val=>{this.handleChange('username',val)}} placeholder="请输入用户名">用户名:</InputItem>
+                            <WhiteSpace />
+                            <InputItem type="password" onChange={val=>{this.handleChange('password',val)}} placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码:</InputItem>
+                            <WhiteSpace size="xl" />
+                            {/* <Button type="default" size="small">点击进行验证</Button> */}
+                            <Button type="primary" size="small" onClick={this.login}>登录</Button>
+                            <WhiteSpace size="xl" />
+                            <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
+                            <WhiteSpace size="xl"/>
+                        </List>
+                    </div>
+                    <div className={styles.tab_item}>
+                        <List>
+                            <WhiteSpace />
+                            { msg ? <div className="error-msg">{msg}</div> : null }
+                            <InputItem type="number" onChange={val=>{this.handleChange('username',val)}} placeholder="手机号">手机号:</InputItem>
+                            <WhiteSpace />
+                            <InputItem type="number" onChange={val=>{this.handleChange('password',val)}} placeholder="验证码">验证码:</InputItem>
+                            <WhiteSpace size="xl" />
+                            {/* <Button type="default" size="small">点击进行验证</Button> */}
+                            <Button type="primary" size="small" onClick={this.login}>登录</Button>
+                            <WhiteSpace size="xl" />
+                            <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
+                            <WhiteSpace size="xl"/>
+                        </List>
+                    </div>
+                </Tabs>
+            </WingBlank>
         );
     }
 }
