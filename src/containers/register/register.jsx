@@ -3,7 +3,7 @@ import { WingBlank, List, InputItem, WhiteSpace, Radio, Button, Checkbox } from 
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/actions'
-import styles from './register.module.less'
+import styles from './register.module.scss'
 
 const ListItem = List.Item;
 const AgreeItem = Checkbox.AgreeItem;

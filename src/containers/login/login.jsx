@@ -3,7 +3,7 @@ import { WingBlank, List, InputItem, WhiteSpace, Button, Tabs } from 'antd-mobil
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { login } from '../../redux/actions'
-import styles from './login.module.less'
+import styles from './login.module.scss'
 
 class Login extends Component {
     state = {
