@@ -12,13 +12,26 @@
 }
 
 .footer_link{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .login_btn{
         color: #108ee9;
         font-size: 12px;
     }
+    .agreement_btn {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: white;
+        margin-right: 5px;
+    }
+    .agreement_btn:checked{
+        background: #108ee9;
+    }
 }
+
 
 :global{
     .register-radio{
@@ -37,6 +50,14 @@
     .register_agree{
         .am-checkbox-agree-label{
             font-size: 12px;
+            .am-checkbox{
+                width: 20px;
+                height: 20px;
+            }
         }
+    }
+    .form-error-explain {
+        display: block;
+        text-align: center;
     }
 }
