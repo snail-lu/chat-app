@@ -78,6 +78,6 @@ class Login extends Component {
     }
 }
 export default connect(
-    state=>({user: state.user}),
-    {login}
+    state=>({ user: state.user }),
+    { login }
 )(Login)
