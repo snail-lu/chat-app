@@ -6,9 +6,9 @@
 export function getRedirectTo(type,header){
     let path = '';
     if(type==='boss'){
-        path='/boss'
+        path='/resumes'
     }else{
-        path='/dashen'
+        path='/job'
     }
 
     if(!header){

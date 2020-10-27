@@ -2,21 +2,22 @@
  * 主界面的路由组件
  */
 import React, { Component } from 'react';
-import {Switch,Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import BossInfo from '../boss-info/boss-info';
 import DashenInfo from '../dashen-info/dashen-info';
-import Boss from '../boss/boss';
-import DaShen from '../dashen/dashen';
+import Resumes from '../resumes/resumes';
+import Job from '../job/job';
+import Discover from '../discover/discover';
 import Message from '../message/message';
 import Personal from '../personal/personal';
 import NotFound from '../../components/not-found/NotFound';
 import NavFooter from '../../components/nav-footer/nav-footer';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Cookies from 'js-cookie'                  //可以操作前端cookie的对象
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { getRedirectTo } from '../../utils';
-import {getUser} from '../../redux/actions';
-import {NavBar} from 'antd-mobile';
+import { getUser } from '../../redux/actions';
+import { NavBar } from 'antd-mobile';
 import Chat from '../chat/chat';
 /**
  * 需要实现的功能：
@@ -33,32 +34,39 @@ import Chat from '../chat/chat';
 class Main extends Component {
     navList = [
         {
-            path:'/boss',
-            component:Boss,
-            title:'求职列表',
-            icon:'dashen',
-            text:'求职'
+            path: '/resumes',
+            component: Resumes,
+            title: '简历',
+            icon: 'jianli',
+            text: '简历'
         },
         {
-            path:'/dashen',
-            component:DaShen,
-            title:'职位列表',
-            icon:'boss',
-            text:'职位'
+            path: '/job',
+            component: Job,
+            title: '职位',
+            icon: 'gangwei',
+            text: '职位'
         },
         {
-            path:'/message',
-            component:Message,
-            title:'消息列表',
-            icon:'message',
-            text:'消息'
+            path: '/discover',
+            component: Discover,
+            title: '发现',
+            icon: 'faxian',
+            text: '发现'
         },
         {
-            path:'/personal',
-            component:Personal,
-            title:'个人中心',
-            icon:'personal',
-            text:'个人'
+            path: '/message',
+            component: Message,
+            title: '消息',
+            icon: 'message',
+            text: '消息'
+        },
+        {
+            path: '/personal',
+            component: Personal,
+            title: '我的',
+            icon: 'personal',
+            text: '我的'
         }
     ];
     componentDidMount(){
@@ -110,7 +118,7 @@ class Main extends Component {
         }
         return (
             <div>
-                {currentNav ? <NavBar className="stick-top">{currentNav.title}</NavBar>:null}
+                {/* {currentNav ? <NavBar className="stick-top">{currentNav.title}</NavBar>:null} */}
                 <Switch>
                     {
                         this.navList.map(nav=><Route path={nav.path} component={nav.component} key={nav.path} />)

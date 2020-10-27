@@ -4,7 +4,7 @@ import {getUserList} from '../../redux/actions';
 import UserList from '../../components/user-list/user-list'
 
 
-class Boss extends Component {
+class Resumes extends Component {
     componentDidMount() { 
         this.props.getUserList('dashen') 
     }
@@ -19,4 +19,4 @@ class Boss extends Component {
 export default connect(
     state=>({userList: state.userList}),
     {getUserList}
-)(Boss);
+)(Resumes);
