@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {List,Badge} from 'antd-mobile';
+import {List,Badge} from 'antd-mobile-v2';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**

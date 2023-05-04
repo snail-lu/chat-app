@@ -1,22 +1,22 @@
-.top_title{
+.top_title {
     color: #108ee9;
     text-align: center;
     font-weight: normal;
 }
 
-.content_box{ 
+.content_box {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff; 
+    background-color: #fff;
 }
 
-.footer_link{
+.footer_link {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .login_btn{
+    .login_btn {
         color: #108ee9;
         font-size: 12px;
     }
@@ -27,30 +27,29 @@
         background: white;
         margin-right: 5px;
     }
-    .agreement_btn:checked{
+    .agreement_btn:checked {
         background: #108ee9;
     }
 }
 
-
-:global{
-    .register-radio{
+:global {
+    .register-radio {
         padding: 0 15px;
-        .am-radio{
+        .am-radio {
             padding: 2.5px;
             border: 1px solid #ccc;
             border-radius: 50%;
             margin-right: 5px;
         }
-        .am-radio-checked{
+        .am-radio-checked {
             border: 1px solid #108ee9;
         }
     }
 
-    .register_agree{
-        .am-checkbox-agree-label{
+    .register_agree {
+        .am-checkbox-agree-label {
             font-size: 12px;
-            .am-checkbox{
+            .am-checkbox {
                 width: 20px;
                 height: 20px;
             }

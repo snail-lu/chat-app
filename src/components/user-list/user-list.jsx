@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card,WingBlank,WhiteSpace} from 'antd-mobile';
+import {Card,WingBlank,WhiteSpace} from 'antd-mobile-v2';
 import {withRouter} from 'react-router-dom';
 import QueueAnim from 'rc-queue-anim';
 const Header = Card.Header;

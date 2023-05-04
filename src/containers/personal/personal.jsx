@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Result,List,Button,WhiteSpace,Modal} from 'antd-mobile';
+import {Result,List,Button,WhiteSpace,Modal} from 'antd-mobile-v2';
 import Cookies from 'js-cookie';
 
 import {resetUser} from '../../redux/actions'

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { WingBlank, List, InputItem as _InputItem, WhiteSpace, Radio, Button, Toast, Checkbox } from 'antd-mobile'
+import { WingBlank, List, InputItem as _InputItem, WhiteSpace, Radio, Button, Toast, Checkbox } from 'antd-mobile-v2'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/actions'
-import styles from './register.module.less'
+import styles from './register.module.scss'
 import { create, addErrorExplanation } from "ant-design-mobile-form";
 
 const ListItem = List.Item;
@@ -13,7 +13,7 @@ const InputItem = addErrorExplanation(_InputItem);
 
 class Register extends Component {
     state = {
-        type: 'dashen',      //用户类型名称  dashen/boss
+        // type: 'dashen',      //用户类型名称  dashen/boss
         registerAgree: false,  // 用户协议授权
     }
     //  注册事件
@@ -26,7 +26,7 @@ class Register extends Component {
                 Toast.show('请勾选用户协议！')
             }
             else if (errors === null && registerAgree) {
-                const params = { ...value, type, registerAgree }
+                const params = { ...value, registerAgree }
                 this.props.register(params)
             }
           });
@@ -50,7 +50,7 @@ class Register extends Component {
     }
 
     render() {
-        const { type } = this.state;
+        // const { type } = this.state;
         const { msg, redirectTo } = this.props.user;
         const { getFieldDecorator } = this.props.form;
 
@@ -65,7 +65,7 @@ class Register extends Component {
         return (
             <WingBlank size="lg">
                 <WhiteSpace size="xl" />
-                <h2 className={styles.top_title}>注册BOSS智聘</h2>
+                <h2 className={styles.top_title}>注册CHAT</h2>
                 <WhiteSpace size="xl" />
                 <div className={styles.content_box}>
                     <List>
@@ -83,7 +83,7 @@ class Register extends Component {
                             rules: [{ required: true, message: "确认密码不可为空"},]
                         })(<InputItem placeholder="请输入确认密码">确认密码：</InputItem>)}
 
-                        <ListItem>
+                        {/* <ListItem>
                             <span>注册意向:</span>
                             {
                                 
@@ -93,7 +93,7 @@ class Register extends Component {
                                 </Radio>
                                 ))
                             }
-                        </ListItem>
+                        </ListItem> */}
                         <WhiteSpace />
 
                         <Button type="primary" size="small" onClick={this.register}>注册</Button>

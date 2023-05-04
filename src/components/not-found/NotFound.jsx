@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button} from 'antd-mobile';
+import {Button} from 'antd-mobile-v2';
 
 class NotFound extends Component {
     render() {

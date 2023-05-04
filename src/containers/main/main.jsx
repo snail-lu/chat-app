@@ -17,7 +17,6 @@ import Cookies from 'js-cookie'                  //可以操作前端cookie的�
 import { Redirect } from 'react-router-dom'
 import { getRedirectTo } from '../../utils';
 import { getUser } from '../../redux/actions';
-import { NavBar } from 'antd-mobile';
 import Chat from '../chat/chat';
 /**
  * 需要实现的功能：

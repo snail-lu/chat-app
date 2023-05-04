@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TabBar } from 'antd-mobile';
+import { TabBar } from 'antd-mobile-v2';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 

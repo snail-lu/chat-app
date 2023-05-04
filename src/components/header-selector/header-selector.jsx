@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {List,Grid} from 'antd-mobile'
+import {List,Grid} from 'antd-mobile-v2'
 
 class HeaderSelector extends Component {
     constructor(props){

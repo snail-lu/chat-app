@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { WingBlank, List, InputItem, WhiteSpace, Button, Tabs } from 'antd-mobile'
+import { WingBlank, List, InputItem, WhiteSpace, Button, Tabs } from 'antd-mobile-v2'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { login } from '../../redux/actions'
-import styles from './login.module.less'
+import styles from './login.module.scss'
 
 class Login extends Component {
     state = {
@@ -35,7 +35,7 @@ class Login extends Component {
         return (
             <WingBlank>
                 <WhiteSpace size="xl" />
-                <h2 className={styles.top_title}>登录BOSS智聘</h2>
+                <h2 className={styles.top_title}>登录CHAT</h2>
                 <WhiteSpace size="xl" />
                 <Tabs tabs={tabs}
                     initialPage={0}

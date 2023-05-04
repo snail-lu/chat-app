@@ -11,7 +11,8 @@ import store from './redux/store';
 import Register from './containers/register/register';
 import Login from './containers/login/login';
 import Main from './containers/main/main';
-import './assets/css/index.less'
+import './assets/css/index.scss';
+import 'antd-mobile-v2/dist/antd-mobile.css';
 
 // import './test/socketio_test'
 

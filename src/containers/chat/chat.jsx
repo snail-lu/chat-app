@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {List,NavBar,InputItem,Icon,Grid} from 'antd-mobile';
+import {List,NavBar,InputItem,Icon,Grid} from 'antd-mobile-v2';
 import {connect} from 'react-redux';
 import {sendMsg,readMsg} from './../../redux/actions';
 import QueueAnim from 'rc-queue-anim';

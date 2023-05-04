@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserList } from '../../redux/actions';
 import UserList from '../../components/user-list/user-list';
-import { NavBar } from 'antd-mobile';
+import { NavBar } from 'antd-mobile-v2';
 
 
 class Job extends Component {
