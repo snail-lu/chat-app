@@ -36,7 +36,7 @@ async function getMsgList(dispatch,userid){
     initIO(dispatch,userid)
     const response = await reqChatList()
     const result = response.data;
-    if(result.code===0){
+    if(result.code===200){
         const {users,chatMsgs} = result.data;
         //分发同步action
         dispatch(receiveMsgList({users,chatMsgs,userid}))
@@ -79,16 +79,16 @@ export const login = (user)=>{
     return async dispatch =>{
         //发送注册的异步ajax请求
         const response = await reqLogin(user);
-        const result = response.data
-        if(result.code===0){
+        const data = response.data
+        if(data.code===200){
             //成功'
-            getMsgList(dispatch,result.data._id);
+            getMsgList(dispatch, data.result._id);
             //分发授权成功的action
-            dispatch(authSuccess(result.data));
+            dispatch(authSuccess(data.result));
         }else{
             //失败
             //分发错误提示信息的同步action
-            dispatch(errorMsg(result.msg));
+            dispatch(errorMsg(data.message));
         }
     }
 }

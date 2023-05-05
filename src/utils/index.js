@@ -11,9 +11,9 @@ export function getRedirectTo(type,header){
         path='/job'
     }
 
-    if(!header){
-        path += 'info'
-    }
+    // if(!header){
+    //     path += 'info'
+    // }
 
     return path;
 }

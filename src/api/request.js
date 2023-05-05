@@ -2,7 +2,7 @@
  * 封装的ajax函数
  */
 import axios from 'axios'
-export default function ajax(url, data={},type='GET'){
+export default function request(url, data={},type='GET'){
     if(type==="GET"){
         let paramStr = '';
         Object.keys(data).forEach(key=>{

@@ -7,8 +7,8 @@ import styles from './login.module.scss'
 
 class Login extends Component {
     state = {
-        username: '', //用户名
-        password: '', //密码
+        username: 'user1', //用户名
+        password: '123456', //密码
         tabs: [
             { title: '密码登录' },
             { title: '短信登录' }
@@ -19,7 +19,7 @@ class Login extends Component {
         this.props.login(this.state)
     }
     toRegister = ()=>{
-        this.props.history.replace('/Register');
+        this.props.history.replace('/register');
     }
     handleChange = (name,val)=>{
         this.setState({
@@ -28,7 +28,7 @@ class Login extends Component {
     }
     render() {
         const { msg, redirectTo } = this.props.user;
-        const { tabs } = this.state;
+        const { tabs, username, password } = this.state;
         if(redirectTo){
             return <Redirect to={redirectTo} />
         }
@@ -46,9 +46,9 @@ class Login extends Component {
                         <List>
                             <WhiteSpace />
                             { msg ? <div className="error-msg">{msg}</div> : null }
-                            <InputItem type="text" onChange={val=>{this.handleChange('username',val)}} placeholder="请输入用户名">用户名:</InputItem>
+                            <InputItem type="text" value={username} onChange={val=>{this.handleChange('username',val)}} placeholder="请输入用户名">用户名:</InputItem>
                             <WhiteSpace />
-                            <InputItem type="password" onChange={val=>{this.handleChange('password',val)}} placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码:</InputItem>
+                            <InputItem type="password" value={password}  onChange={val=>{this.handleChange('password',val)}} placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码:</InputItem>
                             <WhiteSpace size="xl" />
                             {/* <Button type="default" size="small">点击进行验证</Button> */}
                             <Button type="primary" size="small" onClick={this.login}>登录</Button>
