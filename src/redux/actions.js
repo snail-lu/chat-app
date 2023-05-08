@@ -35,11 +35,11 @@ const msgRead = ({count,from,to})=>({type:MSG_READ,data:{count,from,to}})
 async function getMsgList(dispatch,userid){
     initIO(dispatch,userid)
     const response = await reqChatList()
-    const result = response.data;
-    if(result.code===200){
-        const {users,chatMsgs} = result.data;
+    const res = response.data;
+    if(res.code===200){
+        const {users,chatMsgs} = res.result;
         //分发同步action
-        dispatch(receiveMsgList({users,chatMsgs,userid}))
+        dispatch(receiveMsgList({ users,chatMsgs,userid }))
     }
 }
 //注册异步action
@@ -125,7 +125,7 @@ export const getUserList = (userType)=>{
     return async dispatch =>{
         const response = await reqUserList(userType);
         const result = response.data
-        if(result.code===0){  //获取成功：data
+        if(result.code===200){  //获取成功：data
             dispatch(receiveUserList(result.data))
         }
     }

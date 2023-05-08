@@ -17,7 +17,7 @@ function user(state=initUser,action){
     switch(action.type){
         case AUTH_SUCCESS:
             const {type,header} = action.data;
-            return {...action.data,redirectTo:getRedirectTo(type,header)}
+            return {...action.data,redirectTo:getRedirectTo('boss',header)}
 
         case ERROR_MSG:
             return {msg:action.msg}
