@@ -43,7 +43,7 @@ async function getMsgList(dispatch,userid){
     }
 }
 //注册异步action
-export const register = ({username,password,password2,type})=>{
+export const register = ({username,password,password2,header})=>{
     if(!username || !password){
         return errorMsg('请输入用户名及密码')
     }else if(password!==password2){
@@ -52,17 +52,17 @@ export const register = ({username,password,password2,type})=>{
     
     return async dispatch =>{
         //发送注册的异步ajax请求
-        const response = await reqRegister({username,password,type});
+        const response = await reqRegister({username,password, header});
         const result = response.data
-        if(result.code===0){
+        if(result.code===200){
             //成功,获取相关聊天信息列表
-            getMsgList(dispatch,result.data._id);
+            // getMsgList(dispatch,result.result._id);
             //分发授权成功的action
-            dispatch(authSuccess(result.data));
+            dispatch(authSuccess(result.result));
         }else{
             //失败
             //分发错误提示信息的同步action
-            dispatch(errorMsg(result.msg));
+            dispatch(errorMsg(result.message));
         }
     }
 }
@@ -82,7 +82,7 @@ export const login = (user)=>{
         const data = response.data
         if(data.code===200){
             //成功'
-            getMsgList(dispatch, data.result._id);
+            // getMsgList(dispatch, data.result._id);
             //分发授权成功的action
             dispatch(authSuccess(data.result));
         }else{
@@ -111,22 +111,22 @@ export const getUser = (user)=>{
     return async dispatch =>{
         const response = await reqUser();
         const result = response.data
-        if(result.code===0){  //获取成功：data
-            getMsgList(dispatch,result.data._id);
-            dispatch(receiveUser(result.data))
+        if(result.code===200){  //获取成功：data
+            getMsgList(dispatch, result.result._id);
+            dispatch(receiveUser(result.result))
         }else{                //获取失败：msg
-            dispatch(resetUser(result.msg))
+            dispatch(resetUser(result.message))
         }
     }
 }
 
 //获取用户列表异步action
-export const getUserList = (userType)=>{
+export const getUserList = ()=>{
     return async dispatch =>{
-        const response = await reqUserList(userType);
+        const response = await reqUserList();
         const result = response.data
         if(result.code===200){  //获取成功：data
-            dispatch(receiveUserList(result.data))
+            dispatch(receiveUserList(result.result))
         }
     }
 }

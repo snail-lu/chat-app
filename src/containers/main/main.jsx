@@ -3,10 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import BossInfo from '../boss-info/boss-info';
-import DashenInfo from '../dashen-info/dashen-info';
-import Resumes from '../resumes/resumes';
-import Job from '../job/job';
+import Friends from '../friends/friends';
 import Discover from '../discover/discover';
 import Message from '../message/message';
 import Personal from '../personal/personal';
@@ -33,19 +30,26 @@ import Chat from '../chat/chat';
 class Main extends Component {
     navList = [
         {
-            path: '/resumes',
-            component: Resumes,
-            title: '简历',
-            icon: 'jianli',
-            text: '简历'
+            path: '/message',
+            component: Message,
+            title: '消息',
+            icon: 'message',
+            text: '消息'
         },
         {
-            path: '/job',
-            component: Job,
-            title: '职位',
-            icon: 'gangwei',
-            text: '职位'
+            path: '/friends',
+            component: Friends,
+            title: '通讯录',
+            icon: 'jianli',
+            text: '通讯录'
         },
+        // {
+        //     path: '/job',
+        //     component: Job,
+        //     title: '职位',
+        //     icon: 'gangwei',
+        //     text: '职位'
+        // },
         {
             path: '/discover',
             component: Discover,
@@ -54,18 +58,11 @@ class Main extends Component {
             text: '发现'
         },
         {
-            path: '/message',
-            component: Message,
-            title: '消息',
-            icon: 'message',
-            text: '消息'
-        },
-        {
             path: '/personal',
             component: Personal,
-            title: '我的',
+            title: '我',
             icon: 'personal',
-            text: '我的'
+            text: '我'
         }
     ];
     componentDidMount(){
@@ -108,13 +105,13 @@ class Main extends Component {
 
         const path = this.props.location.pathname;
         const currentNav = this.navList.find(nav=>nav.path===path);
-        if(currentNav){
-            if(user.type==='boss'){
-                this.navList[1].hide = true;
-            }else{
-                this.navList[0].hide = true;
-            }
-        }
+        // if(currentNav){
+        //     if(user.type==='boss'){
+        //         this.navList[1].hide = true;
+        //     }else{
+        //         this.navList[0].hide = true;
+        //     }
+        // }
         return (
             <div>
                 {/* {currentNav ? <NavBar className="stick-top">{currentNav.title}</NavBar>:null} */}
@@ -122,8 +119,6 @@ class Main extends Component {
                     {
                         this.navList.map(nav=><Route path={nav.path} component={nav.component} key={nav.path} />)
                     }
-                    <Route path="/bossinfo" component={BossInfo}/>
-                    <Route path="/dasheninfo" component={DashenInfo}/>
                     <Route path='/chat/:userid' component={Chat} />
                     <Route component={NotFound} />
                 </Switch>

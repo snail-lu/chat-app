@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Result,List,Button,WhiteSpace,Modal} from 'antd-mobile-v2';
+import { Result, List, Button, WhiteSpace, Modal, NavBar } from 'antd-mobile-v2';
 import Cookies from 'js-cookie';
 
 import {resetUser} from '../../redux/actions'
@@ -27,21 +27,21 @@ class Person extends Component {
         ])
     }
     render() {
-        const {username,header,post,info,salary,company} = this.props.user;
+        const {username, avatar} = this.props.user;
         return (
-            <div style={{marginTop:50,marginBottom:60}}>
-                <Result 
-                    img={<img src={require(`../../assets/images/${header}.png`)} style={{width:50}} alt="header"/>}
+            <div style={{ marginTop:50, marginBottom:60 }}>
+                <NavBar className="stick-top">个人中心</NavBar>
+                {/* <Result 
+                    img={<img src={require(`../../assets/images/${avatar}.png`)} style={{width:50}} alt="header"/>}
                     title={username}
-                    message={company}
-                />
-                <List renderHeader={()=>'相关信息'}>
+                /> */}
+                {/* <List renderHeader={()=>'相关信息'}>
                     <Item multipleLine>
                         <Brief>职位：{post}</Brief>
                         <Brief>简介：{info}</Brief>
                         {salary?<Brief>薪资：{salary}</Brief>:null}
                     </Item>
-                </List>
+                </List> */}
                 <WhiteSpace />
                 <Button type="warning" onClick={this.handleLogout}>退出登录</Button>
             </div>

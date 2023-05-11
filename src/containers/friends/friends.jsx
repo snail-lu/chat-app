@@ -4,18 +4,18 @@ import {getUserList} from '../../redux/actions';
 import UserList from '../../components/user-list/user-list'
 import { NavBar } from 'antd-mobile-v2';
 
-class DaShen extends Component {
+
+class Friends extends Component {
     componentDidMount() { 
-        this.props.getUserList("boss") 
+        this.props.getUserList() 
     }
 
     render() {
         return (
             <div>
-                <NavBar className="stick-top">发现</NavBar>
+                <NavBar className="stick-top">通讯录</NavBar>
                 <UserList userList={this.props.userList} />
             </div>
-
         );
     }
 }
@@ -23,4 +23,4 @@ class DaShen extends Component {
 export default connect(
     state=>({userList: state.userList}),
     {getUserList}
-)(DaShen);
+)(Friends);

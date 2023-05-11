@@ -18,7 +18,7 @@ export const reqUpdateUser = (user)=>request('/api/user/update',user,'POST');
 export const reqUser = ()=>request('/api/user/detail');
 
 //获取用户列表接口
-export const reqUserList = (userType)=>request('/api/user/list',{type:userType},'POST');
+export const reqUserList = ()=>request('/api/user/list',{},'POST');
 
 //获取消息列表
 export const reqChatList = ()=>request('/api/chat/msglist');

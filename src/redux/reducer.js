@@ -3,10 +3,9 @@
  */
 import { combineReducers } from 'redux';
 import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER,RECEIVE_USER_LIST,RECEIVE_MSG_LIST,RECEIVE_MSG,MSG_READ} from './action-types';
-import {getRedirectTo} from '../utils'
 
 const initUser = {
-    username: '', //用户名
+    username: '', // 用户名
     type: '',     //用户类型
     msg: '',       //返回的错误信息
     redirectTo:''   //需要自动重定向的路由路径
@@ -16,8 +15,7 @@ const initUserList = [];
 function user(state=initUser,action){
     switch(action.type){
         case AUTH_SUCCESS:
-            const {type,header} = action.data;
-            return {...action.data,redirectTo:getRedirectTo('boss',header)}
+            return {...action.data, redirectTo:'/friends'}
 
         case ERROR_MSG:
             return {msg:action.msg}

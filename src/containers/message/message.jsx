@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {List,Badge} from 'antd-mobile-v2';
+import {List,Badge, NavBar} from 'antd-mobile-v2';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
@@ -55,6 +55,8 @@ class Message extends Component {
         const lastMsgs = getLastMsgs(chatMsgs,user._id)
         
         return (
+            <div>
+            <NavBar className="stick-top">CHAT</NavBar>
             <List style={{marginTop:50, marginBottom: 60}}>
                 {
                     lastMsgs.map(msg=>{
@@ -75,6 +77,7 @@ class Message extends Component {
                     })
                 }
             </List>
+            </div>
         );
     }
 }

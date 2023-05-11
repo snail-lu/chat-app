@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/actions'
 import styles from './register.module.scss'
 import { create, addErrorExplanation } from "ant-design-mobile-form";
+import HeaderSelector from '../../components/header-selector/header-selector';
 
 const ListItem = List.Item;
 
@@ -13,12 +14,12 @@ const InputItem = addErrorExplanation(_InputItem);
 
 class Register extends Component {
     state = {
-        // type: 'dashen',      //用户类型名称  dashen/boss
+        avatar: '',
         registerAgree: false,  // 用户协议授权
     }
     //  注册事件
     register = () => {
-        const { registerAgree, type } = this.state;
+        const { registerAgree, avatar } = this.state;
         this.props.form.validateFields(async (errors, value) => {
             if(value.password !== value.password2){
                 Toast.show('两次密码输入不一致！')
@@ -26,7 +27,7 @@ class Register extends Component {
                 Toast.show('请勾选用户协议！')
             }
             else if (errors === null && registerAgree) {
-                const params = { ...value, registerAgree }
+                const params = { ...value, avatar }
                 this.props.register(params)
             }
           });
@@ -49,15 +50,15 @@ class Register extends Component {
 
     }
 
+    setHeader = (avatar)=>{
+        this.setState({
+            avatar
+        })
+    }
+
     render() {
-        // const { type } = this.state;
         const { msg, redirectTo } = this.props.user;
         const { getFieldDecorator } = this.props.form;
-
-        const data = [ 
-            { value: 'dashen', label: '求职' },
-            { value: 'boss', label: '招聘' }
-        ]; 
 
         if(redirectTo){
             return <Redirect to={redirectTo} />
@@ -95,6 +96,8 @@ class Register extends Component {
                             }
                         </ListItem> */}
                         <WhiteSpace />
+
+                        <HeaderSelector setHeader={this.setHeader}/>
 
                         <Button type="primary" size="small" onClick={this.register}>注册</Button>
                         <WhiteSpace size="lg"/>

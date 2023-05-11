@@ -11,7 +11,11 @@ export default function request(url, data={},type='GET'){
         if(paramStr){
             paramStr = paramStr.substring(0,paramStr.length-1);
         }
-        return axios.get(url+'?'+paramStr);
+        if(paramStr) {
+            return axios.get(url+'?'+paramStr);
+        } else {
+            return axios.get(url)
+        }
     }else{
         return axios.post(url,data);
     }
