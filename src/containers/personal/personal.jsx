@@ -31,10 +31,10 @@ class Person extends Component {
         return (
             <div style={{ marginTop:50, marginBottom:60 }}>
                 <NavBar className="stick-top">个人中心</NavBar>
-                {/* <Result 
+                <Result 
                     img={<img src={require(`../../assets/images/${avatar}.png`)} style={{width:50}} alt="header"/>}
                     title={username}
-                /> */}
+                />
                 {/* <List renderHeader={()=>'相关信息'}>
                     <Item multipleLine>
                         <Brief>职位：{post}</Brief>
