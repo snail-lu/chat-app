@@ -7,7 +7,6 @@ import Friends from '../friends/friends';
 import Discover from '../discover/discover';
 import Message from '../message/message';
 import Personal from '../personal/personal';
-import NotFound from '../../components/not-found/NotFound';
 import NavFooter from '../../components/nav-footer/nav-footer';
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'                  //可以操作前端cookie的对象
