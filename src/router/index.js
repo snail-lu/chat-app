@@ -1,9 +1,10 @@
 import Register from '../containers/register/register';
 import Login from '../containers/login/login';
+import Chat from '../containers/chat/chat';
 import Main from '../containers/main/main';
 import ErrorPage from '../components/error-page/error-page';
 
-export default [
+const routes = [
     {
         path: '/',
         element: <Main />,
@@ -16,5 +17,10 @@ export default [
     {
         path: 'login',
         element: <Login />
+    },
+    {
+        path: '/chat/:userid',
+        element: <Chat /> 
     }
 ]
+export default routes;

@@ -10,10 +10,10 @@ import Personal from '../personal/personal';
 import NavFooter from '../../components/nav-footer/nav-footer';
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'                  //可以操作前端cookie的对象
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { getRedirectTo } from '../../utils';
 import { getUser } from '../../redux/actions';
-import Chat from '../chat/chat';
+// import Chat from '../chat/chat';
 /**
  * 需要实现的功能：
  * 1.实现自动登录
@@ -78,7 +78,7 @@ class Main extends Component {
         const userid = Cookies.get('userid');
         //如果没有，自动重定向到登录界面
         if(!userid){
-            return <Redirect to='/login' />
+            return <Navigate to='/login' replace={true}/>
         }
         //如果有，读取redux中的user状态
         const {user,unReadCount} = this.props;
@@ -91,7 +91,7 @@ class Main extends Component {
             if(path==='/'){       //如果请求的是根路径
                 //计算一个重定向的路由路径
                 path = getRedirectTo(user.type,user.header);
-                return <Redirect to={path} />
+                return <Navigate to={path} replace={true} />
             }
         }
         /*
@@ -118,8 +118,8 @@ class Main extends Component {
                     {
                         this.navList.map(nav=><Route path={nav.path} component={nav.component} key={nav.path} />)
                     }
-                    <Route path='/chat/:userid' component={Chat} />
-                    <Route component={NotFound} />
+                    {/* <Route path='/chat/:userid' component={Chat} />
+                    <Route component={NotFound} /> */}
                 </Switch>
                 {currentNav ? <NavFooter navList={this.navList} unReadCount={unReadCount}/>:null}
             </div>
