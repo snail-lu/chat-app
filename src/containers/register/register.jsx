@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { WingBlank, List, InputItem as _InputItem, WhiteSpace, Radio, Button, Toast, Checkbox } from 'antd-mobile-v2'
-import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { register } from '../../redux/actions'
 import styles from './register.module.scss'
 import { create, addErrorExplanation } from "ant-design-mobile-form";
@@ -12,15 +12,14 @@ const ListItem = List.Item;
 
 const InputItem = addErrorExplanation(_InputItem);
 
-class Register extends Component {
-    state = {
-        avatar: '',
-        registerAgree: false,  // 用户协议授权
-    }
+function Register(props) {
+    const [avatar, setAvatar] = useState('')
+    const [registerAgree, setRegisterAgree] = useState(false)
+    const navigate = useNavigate()
+
     //  注册事件
-    register = () => {
-        const { registerAgree, avatar } = this.state;
-        this.props.form.validateFields(async (errors, value) => {
+    const toRegister = () => {
+        props.form.validateFields(async (errors, value) => {
             if(value.password !== value.password2){
                 Toast.show('两次密码输入不一致！')
             }else if(!registerAgree) { 
@@ -28,35 +27,32 @@ class Register extends Component {
             }
             else if (errors === null && registerAgree) {
                 const params = { ...value, avatar }
-                this.props.register(params)
+                register(params)
             }
           });
     }
 
     // 跳转登录页面
-    toLogin = () => {
-        this.props.history.replace('/Login');
+    const toLogin = () => {
+        navigate({ path: '/login', replace: true })
     }
 
     // 表单事件处理
-    handleChange = (name, val) => {
+    const handleChange = (name, val) => {
         this.setState({
             [name]: val
         })
     }
 
     // 用户协议弹窗显示
-    showAgreement = () => {
+    const showAgreement = () => {
 
     }
 
-    setHeader = (avatar)=>{
-        this.setState({
-            avatar
-        })
+    const setHeader = (avatar) => {
+        setAvatar(avatar)
     }
 
-    render() {
         const { msg, redirectTo } = this.props.user;
         const { getFieldDecorator } = this.props.form;
 
@@ -84,40 +80,25 @@ class Register extends Component {
                             rules: [{ required: true, message: "确认密码不可为空"},]
                         })(<InputItem placeholder="请输入确认密码">确认密码：</InputItem>)}
 
-                        {/* <ListItem>
-                            <span>注册意向:</span>
-                            {
-                                
-                                data.map(i => (
-                                    <Radio className="register-radio" key={i.value} checked={type === i.value} onChange={() => this.handleChange('type', i.value)}>
-                                    {i.label}
-                                </Radio>
-                                ))
-                            }
-                        </ListItem> */}
                         <WhiteSpace />
 
                         <HeaderSelector setHeader={this.setHeader}/>
 
-                        <Button type="primary" size="small" onClick={this.register}>注册</Button>
+                        <Button type="primary" size="small" onClick={toRegister}>注册</Button>
                         <WhiteSpace size="lg"/>
                         <div className={styles.footer_link}>
                             {/* <input type="checkbox" className={styles.agreement_btn} onChange={val=>this.handleChange('registerAgree', val)} /> */}
                             <Checkbox onChange={val=>this.handleChange('registerAgree', val.target.checked)} />
                             我已同意
-                            <span className={styles.login_btn} onClick={this.showAgreement}>用户协议及隐私政策&nbsp;&nbsp;</span>
-                            <span className={styles.login_btn} onClick={this.toLogin}>直接登录</span>
+                            <span className={styles.login_btn} onClick={showAgreement}>用户协议及隐私政策&nbsp;&nbsp;</span>
+                            <span className={styles.login_btn} onClick={toLogin}>直接登录</span>
                         </div>
                         <WhiteSpace size="xl"/>       
                     </List>
                 </div>
             </WingBlank>
         );
-    }
+   
 }
 
-const RegisterWrapper = create()(Register);
-export default connect(
-    state=>({user: state.user}),
-    {register}
-)(RegisterWrapper)
+export default create()(Register)

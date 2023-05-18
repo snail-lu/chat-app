@@ -19,7 +19,6 @@
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "serve": "^11.0.2",
     "socket.io": "^2.2.0"
   },
   "scripts": {

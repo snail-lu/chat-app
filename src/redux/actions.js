@@ -107,7 +107,7 @@ export const update = (user)=>{
 }
 
 //获取用户信息异步action
-export const getUser = (user)=>{
+export const getUser = ()=>{
     return async dispatch =>{
         const response = await reqUser();
         const result = response.data

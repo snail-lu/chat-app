@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList, reqChatList, reqReadMsg } from '../api'
+import { reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList } from '../api'
 
 // 注册
 export const register = createAsyncThunk('user/register', async({ username, password, password2, avatar }) => {
@@ -34,36 +34,46 @@ export const update = createAsyncThunk('user/update', async (user)=>{
 })
 
 //获取用户信息异步action
-export const getUser = createAsyncThunk('user/getUser', async (user) => {
+export const getUser = createAsyncThunk('user/getUser', async () => {
     const response = await reqUser();
     return response.data
 })
 
+//获取用户列表异步action
+export const getUserList = createAsyncThunk('userList/get', async () =>{
+    const response = await reqUserList();
+    return response.data
+})
+
+
+const initialState = {
+    userInfo: {
+        username: '', // 用户名
+        msg: '',
+        avatar: '', // 头像
+        redirecTo: ''
+    },
+    list: []
+}
+
 export const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        value: {
-            username: '', // 用户名
-            msg: '',
-            avatar: '', // 头像
-            redirecTo: ''
-        }
-    },
+    initialState,
     reducers: {
         authSuccess: (state, action) => {
-            state.value = { ...action.payload, redirecTo: '/friends' }
+            state.userInfo = { ...action.payload, redirecTo: '/friends' }
         },
 
         errorMsg: (state, action) => {
-            state.value.msg = action.payload
+            state.userInfo.msg = action.payload
         },
         
         receiveUser: (state, action) => {
-            state.value = action.payload
+            state.userInfo = action.payload
         },
 
         resetUser: (state, action) => {
-            state.value = {
+            state.userInfo = {
                 username: '',
                 msg: action.payload,
                 avatar: '',
@@ -79,32 +89,32 @@ export const userSlice = createSlice({
                     //成功,获取相关聊天信息列表
                     // getMsgList(dispatch,result.result._id);
                     //分发授权成功的action
-                    state.value = { ...result.result, redirecTo: '/friends' }
+                    state.userInfo = { ...result.result, redirecTo: '/friends' }
                 }else{
                     //失败
                     //分发错误提示信息的同步action
                     // dispatch(errorMsg(result.message));
-                    state.value.msg = result.result.message;
+                    state.userInfo.msg = result.result.message;
                 }
             })
             .addCase(login.fulfilled, (state, action) => {
                 const result = action.payload;
                 if(result.code===200){
                     //分发授权成功的action
-                    state.value = { ...result.result, redirecTo: '/friends' }
+                    state.userInfo = { ...result.result, redirecTo: '/friends' }
                 }else{
                     //失败
                     //分发错误提示信息的同步action
                     // dispatch(errorMsg(result.message));
-                    state.value.msg = result.result.message;
+                    state.userInfo.msg = result.result.message;
                 }
             })
             .addCase(update.fulfilled, (state, action) => {
                 const result = action.payload;
                 if(result.code === 200){  //更新成功：data
-                    state.value = result.result
+                    state.userInfo = result.result
                 }else{                //更新失败：msg
-                    state.value = {
+                    state.userInfo = {
                         username: '',
                         msg: result.result,
                         avatar: '',
@@ -117,14 +127,20 @@ export const userSlice = createSlice({
                 if(result.code === 200){  //获取成功：data
                     // getMsgList(dispatch, result.result._id);
                     // dispatch(receiveUser(result.result))
-                    state.value = result.result;
+                    state.userInfo = result.result;
                 }else{                //获取失败：msg
-                    state.value = {
+                    state.userInfo = {
                         username: '',
                         msg: result.result,
                         avatar: '',
                         redirecTo: ''
                     }
+                }
+            })
+            .addCase(getUserList.fulfilled, (state, action) => {
+                const result = action.payload;
+                if (result.code === 200) {
+                    state.list = result.result
                 }
             })
         }
