@@ -1,83 +1,83 @@
-import React, { Component } from 'react'
-import { WingBlank, List, InputItem, WhiteSpace, Button, Tabs } from 'antd-mobile-v2'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Form, List, Input, Space, Button, Tabs } from 'antd-mobile'
+import { redirect, useNavigate } from 'react-router-dom'
 import { login } from '../../redux/actions'
 import styles from './login.module.scss'
+import { useSelector } from 'react-redux'
 
-class Login extends Component {
-    state = {
-        username: 'user1', //用户名
-        password: '123456', //密码
-        tabs: [
-            { title: '密码登录' },
-            { title: '短信登录' }
-        ]
+function Login(props) {
+    const [username, setUsername] = useState('user1')
+    const [password, setPassword] = useState('123456')
+
+    const navigate = useNavigate()
+    const login = ()=>{
+        login({ username, password })
     }
-    login = ()=>{
-        // console.log(this.state
-        this.props.login(this.state)
+    
+    const toRegister = () => {
+        navigate('/register', true);
     }
-    toRegister = ()=>{
-        this.props.history.replace('/register');
+    
+    const handleUsernameChange = (val) => {
+        setUsername(val)
     }
-    handleChange = (name,val)=>{
-        this.setState({
-            [name]: val
-        })
+
+    const handlePasswordChange = (val) => {
+        setPassword(val)
     }
-    render() {
-        const { msg, redirectTo } = this.props.user;
-        const { tabs, username, password } = this.state;
-        if(redirectTo){
-            return <Redirect to={redirectTo} />
-        }
-        return (
-            <WingBlank>
-                <WhiteSpace size="xl" />
-                <h2 className={styles.top_title}>登录CHAT</h2>
-                <WhiteSpace size="xl" />
-                <Tabs tabs={tabs}
-                    initialPage={0}
-                    onChange={(tab, index) => { console.log('onChange', index, tab); }}
-                    onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
-                    >
-                    <div className={styles.tab_item}>
+
+    const user = useSelector(state => state.user.userInfo)
+    const { msg, redirectTo } = user;
+    if(redirectTo){
+        return redirect(redirectTo)
+    }
+    return (
+        <div>
+            <Space direction='vertical' />
+            <h2 className={styles.top_title}>登录CHAT</h2>
+            <Space direction='vertical' />
+            <Tabs>
+                <Tabs.Tab title='密码登录' key='1'>
+                    <Form layout='horizontal'>
+                        <Form.Item label='用户名' name='username'>
+                            <Input placeholder='请输入用户名' clearable value={username} defaultValue={username} onChange={val=>{handleUsernameChange(val)}} />
+                        </Form.Item>
+                        <Form.Item label='密码' name='password'>
+                            <Input placeholder='请输入密码' clearable type='password' value={password} defaultValue={password}  onChange={val=>{handlePasswordChange(val)}} />
+                        </Form.Item>
+                    </Form>
+                    <List>
+                        <Space />
+                        { msg ? <div className="error-msg">{msg}</div> : null }
+                        <Space size="xl" />
+                        <Button block shape='rounded' color='primary' onClick={login}>登录</Button>
+                        <Space size="xl" />
+                        <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={toRegister}>去注册</span></div>
+                        <Space size="xl"/>
+                    </List>
+                </Tabs.Tab>
+                <Tabs.Tab title='短信登录' key='2'>
+                    <Form layout='horizontal'>
+                        <Form.Item label='手机号' name='username'>
+                            <Input placeholder='请输入用户名' clearable value={username} defaultValue={username} onChange={val=>{handleUsernameChange(val)}} />
+                        </Form.Item>
+                        <Form.Item label='验证码' name='password'>
+                            <Input placeholder='请输入密码' clearable type='password' value={password} defaultValue={password}  onChange={val=>{handlePasswordChange(val)}} />
+                        </Form.Item>
+                    </Form>
                         <List>
-                            <WhiteSpace />
+                            <Space />
                             { msg ? <div className="error-msg">{msg}</div> : null }
-                            <InputItem type="text" value={username} onChange={val=>{this.handleChange('username',val)}} placeholder="请输入用户名">用户名:</InputItem>
-                            <WhiteSpace />
-                            <InputItem type="password" value={password}  onChange={val=>{this.handleChange('password',val)}} placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码:</InputItem>
-                            <WhiteSpace size="xl" />
-                            {/* <Button type="default" size="small">点击进行验证</Button> */}
-                            <Button type="primary" size="small" onClick={this.login}>登录</Button>
-                            <WhiteSpace size="xl" />
-                            <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
-                            <WhiteSpace size="xl"/>
+                            <Space size="xl" />
+                            <Button block shape='rounded' color='primary' onClick={login}>登录</Button>
+                            <Space size="xl" />
+                            <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={toRegister}>去注册</span></div>
+                            <Space size="xl"/>
                         </List>
-                    </div>
-                    <div className={styles.tab_item}>
-                        <List>
-                            <WhiteSpace />
-                            { msg ? <div className="error-msg">{msg}</div> : null }
-                            <InputItem type="number" onChange={val=>{this.handleChange('username',val)}} placeholder="手机号">手机号:</InputItem>
-                            <WhiteSpace />
-                            <InputItem type="number" onChange={val=>{this.handleChange('password',val)}} placeholder="验证码">验证码:</InputItem>
-                            <WhiteSpace size="xl" />
-                            {/* <Button type="default" size="small">点击进行验证</Button> */}
-                            <Button type="primary" size="small" onClick={this.login}>登录</Button>
-                            <WhiteSpace size="xl" />
-                            <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={this.toRegister}>去注册</span></div>
-                            <WhiteSpace size="xl"/>
-                        </List>
-                    </div>
-                </Tabs>
-            </WingBlank>
-        );
-    }
+                </Tabs.Tab>
+            </Tabs>
+        </div>
+    );
 }
-export default connect(
-    state=>({ user: state.user }),
-    { login }
-)(Login)
+
+export default Login;

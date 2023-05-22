@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { Result, List, Button, WhiteSpace, Modal, NavBar } from 'antd-mobile-v2';
+import { Result, List, Button, Space, Modal, NavBar } from 'antd-mobile';
 import Cookies from 'js-cookie';
 
 import {resetUser} from '../../redux/actions'
@@ -42,7 +42,7 @@ class Person extends Component {
                         {salary?<Brief>薪资：{salary}</Brief>:null}
                     </Item>
                 </List> */}
-                <WhiteSpace />
+                <Space />
                 <Button type="warning" onClick={this.handleLogout}>退出登录</Button>
             </div>
         );

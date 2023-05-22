@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import io from 'socket.io-client'
 import { reqChatList, reqReadMsg } from '../api'
 
@@ -32,7 +32,7 @@ export const readMsg = (from,to)=>{
 }
 //初始化socketIO
 function initIO(userid) {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     if(!io.socket){
         //连接服务器，创建代表连接的socket对象
         io.socket = io('ws://localhost:4000')
@@ -41,7 +41,7 @@ function initIO(userid) {
             console.log('浏览器端接收到消息',chatMsg)
             //只有当chatMsg是与当前用户相关的信息，才去分发同步action保存消息
             if(userid===chatMsg.from || userid===chatMsg.to){
-                dispatch(receiveMsg({chatMsg,userid}))
+                // dispatch(receiveMsg({chatMsg,userid}))
             }
         })
     }

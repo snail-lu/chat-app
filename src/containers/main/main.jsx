@@ -114,13 +114,13 @@ class Main extends Component {
         return (
             <div>
                 {/* {currentNav ? <NavBar className="stick-top">{currentNav.title}</NavBar>:null} */}
-                <Switch>
+                {/* <Switch> */}
                     {
                         this.navList.map(nav=><Route path={nav.path} component={nav.component} key={nav.path} />)
                     }
                     {/* <Route path='/chat/:userid' component={Chat} />
                     <Route component={NotFound} /> */}
-                </Switch>
+                {/* </Switch> */}
                 {currentNav ? <NavFooter navList={this.navList} unReadCount={unReadCount}/>:null}
             </div>
         );

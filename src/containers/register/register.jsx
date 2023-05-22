@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { WingBlank, List, InputItem as _InputItem, WhiteSpace, Radio, Button, Toast, Checkbox } from 'antd-mobile-v2'
-import { Redirect } from 'react-router-dom'
+import { List, Input as _Input, Space, Radio, Button, Toast, Checkbox } from 'antd-mobile'
+import { redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../redux/actions'
 import styles from './register.module.scss'
@@ -10,7 +10,7 @@ import HeaderSelector from '../../components/header-selector/header-selector';
 const ListItem = List.Item;
 
 
-const InputItem = addErrorExplanation(_InputItem);
+const Input = addErrorExplanation(_Input);
 
 function Register(props) {
     const [avatar, setAvatar] = useState('')
@@ -57,46 +57,46 @@ function Register(props) {
         const { getFieldDecorator } = this.props.form;
 
         if(redirectTo){
-            return <Redirect to={redirectTo} />
+            return redirect(redirectTo)
         }
         return (
-            <WingBlank size="lg">
-                <WhiteSpace size="xl" />
+            <div>
+                <Space size="xl" />
                 <h2 className={styles.top_title}>注册CHAT</h2>
-                <WhiteSpace size="xl" />
+                <Space size="xl" />
                 <div className={styles.content_box}>
                     <List>
                         {msg? <div className="error-msg">{msg}</div>:null}
-                        <WhiteSpace />
+                        <Space />
 
                         { getFieldDecorator("username", {
                             rules: [{ required: true, message: "用户名不可为空"},]
-                        })(<InputItem placeholder="请输入用户名">用户名：</InputItem>)}
+                        })(<Input placeholder="请输入用户名">用户名：</Input>)}
 
                         { getFieldDecorator("password", {
                             rules: [{ required: true, message: "密码不可为空"},]
-                        })(<InputItem placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码：</InputItem>)}
+                        })(<Input placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码：</Input>)}
                         { getFieldDecorator("password2", {
                             rules: [{ required: true, message: "确认密码不可为空"},]
-                        })(<InputItem placeholder="请输入确认密码">确认密码：</InputItem>)}
+                        })(<Input placeholder="请输入确认密码">确认密码：</Input>)}
 
-                        <WhiteSpace />
+                        <Space />
 
                         <HeaderSelector setHeader={this.setHeader}/>
 
                         <Button type="primary" size="small" onClick={toRegister}>注册</Button>
-                        <WhiteSpace size="lg"/>
+                        <Space size="lg"/>
                         <div className={styles.footer_link}>
                             {/* <input type="checkbox" className={styles.agreement_btn} onChange={val=>this.handleChange('registerAgree', val)} /> */}
-                            <Checkbox onChange={val=>this.handleChange('registerAgree', val.target.checked)} />
+                            <Checkbox onChange={val=> handleChange('registerAgree', val.target.checked)} />
                             我已同意
                             <span className={styles.login_btn} onClick={showAgreement}>用户协议及隐私政策&nbsp;&nbsp;</span>
                             <span className={styles.login_btn} onClick={toLogin}>直接登录</span>
                         </div>
-                        <WhiteSpace size="xl"/>       
+                        <Space size="xl"/>       
                     </List>
                 </div>
-            </WingBlank>
+            </div>
         );
    
 }

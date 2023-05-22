@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import {Card,WingBlank,WhiteSpace} from 'antd-mobile-v2';
-import {withRouter} from 'react-router-dom';
+import React from 'react';
+import { Card, Space } from 'antd-mobile';
+import { useNavigate } from 'react-router-dom';
 import QueueAnim from 'rc-queue-anim';
 const Header = Card.Header;
 const Body = Card.Body;
 
 
-class UserList extends Component { 
-    render() {
+function UserList(props) {
+    const navigate = useNavigate()
         return (
-            <WingBlank style={{marginTop:50, marginBottom:60}}> 
+            // <WingBlank style={{marginTop:50, marginBottom:60}}> 
                 <QueueAnim type='scale' delay={100}>
                 { 
-                    this.props.userList.map(user => ( 
+                    props.userList.map(user => ( 
                         <div key={user._id}> 
-                            <WhiteSpace/> 
-                            <Card onClick={()=>{this.props.history.push(`/chat/${user._id}`)}}> 
+                            <Space /> 
+                            <Card onClick={() => navigate(`/chat/${user._id}`)}> 
                                 <Header 
                                     thumb={user.header ? require(`../../assets/images/${user.header}.png`) : null} 
                                     extra={user.username} />
@@ -34,9 +34,8 @@ class UserList extends Component {
                     )) 
                 } 
                 </QueueAnim>
-            </WingBlank>
+            // </WingBlank>
         );
-    }
 }
 
-export default withRouter(UserList);
+export default UserList;

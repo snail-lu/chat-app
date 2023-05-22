@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {List,Badge, NavBar} from 'antd-mobile-v2';
+import {List,Badge, NavBar} from 'antd-mobile';
 const Item = List.Item;
 const Brief = Item.Brief;
 /**
