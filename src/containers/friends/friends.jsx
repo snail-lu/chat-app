@@ -1,26 +1,23 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {getUserList} from '../../redux/actions';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserList } from '../../redux/userSlice'
 import UserList from '../../components/user-list/user-list'
 import { NavBar } from 'antd-mobile';
 
 
-class Friends extends Component {
-    componentDidMount() { 
-        this.props.getUserList() 
-    }
+function Friends() {
+    const dispatch = useDispatch()
+    const userList = useSelector(state => state.user.list)
+    useEffect(() => {
+        dispatch(getUserList())
+    }, [])
 
-    render() {
-        return (
-            <div>
-                <NavBar className="stick-top">通讯录</NavBar>
-                <UserList userList={this.props.userList} />
-            </div>
-        );
-    }
+    return (
+        <div>
+            <NavBar className="stick-top" backArrow={false}>通讯录</NavBar>
+            <UserList userList={userList} />
+        </div>
+    );
 }
 
-export default connect(
-    state=>({userList: state.userList}),
-    {getUserList}
-)(Friends);
+export default Friends;

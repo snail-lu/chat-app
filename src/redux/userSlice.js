@@ -51,7 +51,7 @@ const initialState = {
         username: '', // 用户名
         msg: '',
         avatar: '', // 头像
-        redirecTo: ''
+        redirectTo: ''
     },
     list: []
 }
@@ -61,7 +61,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         authSuccess: (state, action) => {
-            state.userInfo = { ...action.payload, redirecTo: '/friends' }
+            state.userInfo = { ...action.payload, redirectTo: '/friends' }
         },
 
         errorMsg: (state, action) => {

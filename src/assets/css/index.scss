@@ -1,12 +1,15 @@
+body {
+    margin: 0;
+}
 //登录/注册页面信息错误提示
-.error-msg{
-    color:red;
+.error-msg {
+    color: red;
     text-align: center;
-    font-size:18px;
+    font-size: 18px;
 }
 
 //导航栏位于底部
-.am-tab-bar{
+.am-tab-bar {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -14,19 +17,19 @@
 }
 
 //顶部导航栏
-.stick-top{
+.stick-top {
     z-index: 10;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
 }
 
-/*消息文本居右*/ 
-#chat-page .chat-me .am-list-extra { 
-    flex-basis: auto; 
-    /*宽度包裹内容*/ 
+/*消息文本居右*/
+#chat-page .chat-me .am-list-extra {
+    flex-basis: auto;
+    /*宽度包裹内容*/
 }
-#chat-page .chat-me .am-list-content { 
-    padding-right: 15px; 
-    text-align: right; 
+#chat-page .chat-me .am-list-content {
+    padding-right: 15px;
+    text-align: right;
 }
