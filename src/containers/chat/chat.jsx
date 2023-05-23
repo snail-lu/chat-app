@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { List, NavBar, Input, Grid } from 'antd-mobile';
 import { RightOutline } from 'antd-mobile-icons'
-import {connect} from 'react-redux';
-import {sendMsg,readMsg} from './../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { sendMsg, readMsg } from '../../redux/chatSlice';
 import QueueAnim from 'rc-queue-anim';
+import { useParams } from 'react-router-dom';
 
 const Item = List.Item;
 
@@ -11,11 +12,14 @@ function Chat(props) {
     const [content, setContent] = useState('')
     const [isShow, setIsShow] = useState(false)
 
+    const { userid } = useParams()
+    const user = useSelector(state => state.user.userInfo)
+    const dispatch = useDispatch()
     const handleSend = ()=>{
         const content = content.trim();
-        const to = props.match.params.userid;
-        const from = props.user._id;
-        props.sendMsg({ from, to, content });
+        const to = userid;
+        const from = user._id;
+        dispatch(sendMsg({ from, to, content }));
         setContent('')
         setIsShow(false)
     }
@@ -41,43 +45,41 @@ function Chat(props) {
         window.scrollTo(0,document.body.scrollHeight)
 
         //发请求，将未读消息状态更换为已读
-        const from = props.match.params.userid;
-        const to = props.user._id;
-        console.log(props.user._id)
-        props.readMsg(from,to)
-    })
+        const from = userid;
+        const to = user._id;
+        debugger
+        dispatch(readMsg({ from, to }))
+    }, [])
 
     // componentDidUpdate(){
     //     window.scrollTo(0,document.body.scrollHeight)
     // }
-        const {user} = props;
-        const {chatMsgs,users} = props.chat;
-        const targetId = props.match.params.userid;
-        if(!users[targetId]){
+        const { chatMsgs,users } = useSelector(state => state.chat);
+        if(!users[userid]){
             return null
         }
         const meId = user._id;
-        const chatId = [targetId,meId].sort().join("_");
+        const chatId = [userid, meId].sort().join("_");
         const msgs = chatMsgs.filter(msg=>msg.chat_id===chatId);
-        const targetIcon = users[targetId].header ? require(`../../assets/images/${users[targetId].header}.png`):null;
+        const targetIcon = users[userid].avatar ? require(`../../assets/images/${users[userid].avatar}.png`):null;
         return (
             <div id='chat-page'>
                 <NavBar className="stick-top"
                         icon={<RightOutline />}
                         onLeftClick={()=>props.history.goBack()}
                     >
-                    {users[targetId].username}
+                    {users[userid].username}
                 </NavBar>
                 <List style={{marginTop:50, marginBottom:50}}>
                     <QueueAnim type='scale' delay={100}>
                     {
                         msgs.map(msg=>{
-                            if(msg.from===targetId){
+                            if(msg.from===userid){
                                 return (
                                     <Item 
                                         key={msg._id}
                                         thumb={targetIcon}
-                                        extra={targetIcon?null:users[targetId].username}
+                                        extra={targetIcon?null:users[userid].username}
                                     >
                                     {msg.content}
                                     </Item>
@@ -129,7 +131,4 @@ function Chat(props) {
         );
     }
 
-export default connect(
-    state => ({user: state.user,chat: state.chat}),
-    {sendMsg,readMsg}
-)(Chat);
+export default Chat;

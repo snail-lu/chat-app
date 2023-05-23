@@ -10,26 +10,19 @@ export const getMsgList = createAsyncThunk('chat/getMsgList', async (userid) => 
     return response.data;
 })
 
-//发送消息异步action
-export const sendMsg = ({from,to,content})=>{
-    return async dispatch =>{
-        console.log('发消息',{from,to,content})
-        initIO();
-        //向服务器发送消息
-        io.socket.emit('sendMsg',{from,to,content})   
-    }
-}
-//读取消息异步action
-export const readMsg = (from,to)=>{
-    return async dispatch =>{
-        const response = await reqReadMsg(from);
-        const result = response.data
-        if(result.code===0){  //获取成功：data
-            const count = result.data;
-            dispatch(msgRead({count,from,to}))
-        }  
-    }
-}
+//发送消息
+export const sendMsg = createAsyncThunk('chat/send', ({ from, to, content }) => {
+    initIO();
+    //向服务器发送消息
+    io.socket.emit('sendMsg', { from, to, content })
+})
+
+//读取消息
+export const readMsg = createAsyncThunk('chat/read', async ({ from, to })=>{
+    const response = await reqReadMsg(from);
+    return { from, to, count: response.data.data }
+})
+
 //初始化socketIO
 function initIO(userid) {
     // const dispatch = useDispatch()
@@ -101,6 +94,20 @@ export const chatSlice = createSlice({
                         unReadCount: chatMsgs.reduce((preTotal, msg)=> preTotal + (!msg.read&&msg.to===userid ? 1 : 0), 0)
                     } 
                 }
+            })
+            .addCase(readMsg.fulfilled, (state, action) => {
+                const { from, to, count } = action.payload;
+                    state.value = {
+                        chatMsgs: state.chatMsgs.map(msg=>{
+                            if (msg.from===from && msg.to===to && !msg.read) {
+                                return {...msg,read:true}
+                            } else {
+                                return msg
+                            }
+                        }),
+                        users: state.users,
+                        unReadCount: state.unReadCount - count
+                    }
             })
     }
 })
