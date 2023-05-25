@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { List,Badge, NavBar } from 'antd-mobile';
-const Item = List.Item;
-const Brief = Item.Brief;
+import { List,Badge, NavBar, Image } from 'antd-mobile';
+import { useNavigate } from 'react-router-dom';
 /**
  * 
  * 对chatMsgs按chat_id进行分组，并得到每个组的lastMsg组成的数组
@@ -46,11 +45,13 @@ function getLastMsgs(chatMsgs, userid){
     return lastMsgs;
 }
 function Message() {
-        const user = useSelector(state => state.user.userInfo)
-        const { users, chatMsgs } = useSelector(state => state.chat);
+    const user = useSelector(state => state.user.userInfo)
+    const { users, chatMsgs } = useSelector(state => state.chat);
+    const navigate = useNavigate()
 
         //对chatMsgs按chat_id进行分组
-        const lastMsgs = getLastMsgs(chatMsgs, user._id)
+        const clonedChatMsgs = JSON.parse(JSON.stringify(chatMsgs))
+        const lastMsgs = getLastMsgs(clonedChatMsgs, user._id)
         
         return (
             <div>
@@ -61,16 +62,23 @@ function Message() {
                             const targetId = msg.to === user._id? msg.from:msg.to;
                             const targetUser = users[targetId];
                             return (
-                                <Item
-                                    extra={<Badge text={msg.unReadCount}/>}
-                                    thumb={targetUser.header?require(`../../assets/images/${targetUser.header}.png`):require(`../../assets/images/头像1.png`)}
-                                    arrow='horizontal'
+                                <List.Item
+                                    extra={<Badge text={msg.unReadCount} />}
+                                    prefix={
+                                        <Image
+                                            src={targetUser.avatar ? require(`../../assets/images/${targetUser.avatar}.png`) : require(`../../assets/images/头像1.png`)}
+                                            style={{ borderRadius: 20 }}
+                                            fit='cover'
+                                            width={40}
+                                            height={40}
+                                        />
+                                    }
                                     key={msg._id}
-                                    onClick={()=>this.props.history.push(`/chat/${targetId}`)}
+                                    onClick={() => navigate(`/chat/${targetId}`)}
+                                    description={msg.content}
                                 >
-                                    {msg.content}
-                                    <Brief>{targetUser.username}</Brief>
-                                </Item>
+                                    {targetUser.username}
+                                </List.Item>
                             )
                         })
                     }

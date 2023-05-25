@@ -51,7 +51,7 @@ export const chatSlice = createSlice({
     reducers: {
         receiveMsgList: (state, action) => {
             const { users, chatMsgs, userid } = action.payload;
-            state.value = {
+            state = {
                 users,
                 chatMsgs,
                 unReadCount: chatMsgs.reduce((preTotal, msg)=> preTotal + (!msg.read&&msg.to===userid?1:0), 0)
@@ -59,17 +59,17 @@ export const chatSlice = createSlice({
         },
         
         receiveMsg: (state, action) => {
-            const { chatMsg } = action.payload;
-            state.value = {
+            const { chatMsg, userid } = action.payload;
+            state = {
                 users: state.users,
                 chatMsgs: [...state.chatMsgs, chatMsg],
-                unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===action.data.userid?1:0)
+                unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===userid?1:0)
             }
         },
         
         msgRead: (state, action) => {
             const {from,to,count} = action.data;
-            state.value = {
+            state = {
                 chatMsgs: state.chatMsgs.map(msg=>{
                     if (msg.from===from && msg.to===to && !msg.read) {
                         return {...msg,read:true}
@@ -88,26 +88,21 @@ export const chatSlice = createSlice({
                 const result = action.payload;
                 if (result.code === 200) {
                     const { users, chatMsgs, userid } = result.result;
-                    state.value = {
-                        users,
-                        chatMsgs,
-                        unReadCount: chatMsgs.reduce((preTotal, msg)=> preTotal + (!msg.read&&msg.to===userid ? 1 : 0), 0)
-                    } 
+                    state.users = users
+                    state.chatMsgs = chatMsgs
+                    state.unReadCount = chatMsgs.reduce((preTotal, msg)=> preTotal + (!msg.read&&msg.to===userid ? 1 : 0), 0)
                 }
             })
             .addCase(readMsg.fulfilled, (state, action) => {
                 const { from, to, count } = action.payload;
-                    state.value = {
-                        chatMsgs: state.chatMsgs.map(msg=>{
-                            if (msg.from===from && msg.to===to && !msg.read) {
-                                return {...msg,read:true}
-                            } else {
-                                return msg
-                            }
-                        }),
-                        users: state.users,
-                        unReadCount: state.unReadCount - count
+                state.chatMsgs = state.chatMsgs.map(msg=>{
+                    if (msg.from===from && msg.to===to && !msg.read) {
+                        return {...msg, read:true }
+                    } else {
+                        return msg
                     }
+                })
+                state.unReadCount = state.unReadCount - count
             })
     }
 })

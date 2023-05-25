@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { List, NavBar, Input, Grid } from 'antd-mobile';
+import { List, NavBar, Input, Grid, Form } from 'antd-mobile';
 import { RightOutline } from 'antd-mobile-icons'
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMsg, readMsg } from '../../redux/chatSlice';
 import QueueAnim from 'rc-queue-anim';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import styles from './chat.module.scss'
 
 const Item = List.Item;
 
-function Chat(props) {
+function Chat() {
     const [content, setContent] = useState('')
     const [isShow, setIsShow] = useState(false)
 
     const { userid } = useParams()
     const user = useSelector(state => state.user.userInfo)
     const dispatch = useDispatch()
-    const handleSend = ()=>{
-        const content = content.trim();
+    const navigate = useNavigate()
+    const handleSend = () => {
         const to = userid;
         const from = user._id;
-        dispatch(sendMsg({ from, to, content }));
+        dispatch(sendMsg({ from, to, content: content.trim() }));
         setContent('')
-        setIsShow(false)
+        // setIsShow(false)
     }
     const toggleShow = () => {
         const show = !isShow;
@@ -47,16 +48,19 @@ function Chat(props) {
         //发请求，将未读消息状态更换为已读
         const from = userid;
         const to = user._id;
-        debugger
+        // debugger
         dispatch(readMsg({ from, to }))
     }, [])
 
     // componentDidUpdate(){
     //     window.scrollTo(0,document.body.scrollHeight)
     // }
-        const { chatMsgs,users } = useSelector(state => state.chat);
-        if(!users[userid]){
-            return null
+        const { chatMsgs, users } = useSelector(state => state.chat);
+        // if(!users[userid]){
+        //     return null
+        // }
+        const selectEmoji = (item) => {
+            console.log(item, 'item')
         }
         const meId = user._id;
         const chatId = [userid, meId].sort().join("_");
@@ -66,12 +70,12 @@ function Chat(props) {
             <div id='chat-page'>
                 <NavBar className="stick-top"
                         icon={<RightOutline />}
-                        onLeftClick={()=>props.history.goBack()}
+                        onBack={() => navigate(-1)}
                     >
                     {users[userid].username}
                 </NavBar>
                 <List style={{marginTop:50, marginBottom:50}}>
-                    <QueueAnim type='scale' delay={100}>
+                    {/* <QueueAnim type='scale' delay={100}> */}
                     {
                         msgs.map(msg=>{
                             if(msg.from===userid){
@@ -97,34 +101,41 @@ function Chat(props) {
                             }
                         })
                     }
-                    </QueueAnim>    
+                    {/* </QueueAnim>     */}
                 </List>
 
                 <div className="am-tab-bar">
-                    <Input 
-                        placeholder="请输入"
-                        value={this.state.content}
-                        onChange={val=>this.setState({content:val})}
-                        onFocus={()=>this.setState({isShow:false})}
-                        extra={
-                            <span>
-                                <span onClick={toggleShow} style={{marginRight:10}}>🙂</span>
-                                <span onClick={handleSend}>发送</span>
-                            </span>
-                        }
-                    />
+                    <Form layout='horizontal'>
+                        <Form.Item
+                            label=''
+                            extra={
+                                <div>
+                                    <span onClick={toggleShow} className={styles['emoji-btn']}>🙂</span>
+                                    <span onClick={() => handleSend()}>发送</span>
+                                </div>
+                            }
+                        >
+                            <Input value={content} onChange={val=> setContent(val)} placeholder='请输入' clearable />
+                        </Form.Item>
+                    </Form>
+
                     {
-                        this.state.isShow?(
-                            <Grid 
-                                data={this.emojis}
-                                columnNum={6}
-                                carouselMaxRow={4}
-                                isCarousel={true}
-                                onClick={(item)=>{
-                                    this.setState({content: this.state.content + item.text})
-                                }}
-                            />
-                        ): null
+                        isShow ? 
+                            <div className={styles['grid-list']}>
+                                <Grid 
+                                    columns={6}
+                                    gap={20}
+                                >
+                                    {
+                                        emojis.map(item => {
+                                            return (<Grid.Item key={item.text}>
+                                                <div className={styles['grid-item-block']} onClick={() => setContent(content + item.text)}>{ item.text }</div>
+                                            </Grid.Item>)
+                                        })
+                                    }
+                                </Grid>
+                            </div>
+                         : null
                     }
                 </div>
             </div>

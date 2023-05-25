@@ -10,6 +10,8 @@ import { Navigate } from 'react-router-dom'
 import { getRedirectTo } from '../../utils';
 import { getUser } from '../../redux/userSlice';
 import styles from './main.module.scss'
+import { getMsgList, receiveMsg } from '../../redux/chatSlice';
+import io from 'socket.io-client'
 // import Chat from '../chat/chat';
 /**
  * 需要实现的功能：
@@ -32,9 +34,30 @@ function Main(props) {
         const { _id } = user;
         if (userid && !_id) {
             //发送异步申请，获取对应的user
-            dispatch(getUser());
+            dispatch(getUser()).unwrap().then(res => {
+                const { _id } = res.result;
+                initIO(_id)
+                dispatch(getMsgList(_id))
+            })
         }
     })
+
+    //初始化socketIO
+    const initIO = (userid) => {
+        // const dispatch = useDispatch()
+        if (!io.socket) {
+            //连接服务器，创建代表连接的socket对象
+            io.socket = io('ws://localhost:4000')
+            //绑定'receiveMessage'的监听，来接收服务器发送的消息
+            io.socket.on('receiveMsg', function (chatMsg) {
+                console.log('浏览器端接收到消息', chatMsg)
+                //只有当chatMsg是与当前用户相关的信息，才去分发同步action保存消息
+                if (userid === chatMsg.from || userid === chatMsg.to) {
+                    dispatch(receiveMsg({ chatMsg, userid }))
+                }
+            })
+        }
+    }
 
     //读取cookie中的userid
     const userid = Cookies.get('userid');
