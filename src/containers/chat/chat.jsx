@@ -6,6 +6,7 @@ import { sendMsg, readMsg } from '../../redux/chatSlice';
 import QueueAnim from 'rc-queue-anim';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './chat.module.scss'
+import ChatItem from '../../components/chat-item/chat-item';
 
 const Item = List.Item;
 
@@ -74,8 +75,7 @@ function Chat() {
                     >
                     {users[userid].username}
                 </NavBar>
-                <List style={{marginTop:50, marginBottom:50}}>
-                    {/* <QueueAnim type='scale' delay={100}> */}
+                {/* <List>
                     {
                         msgs.map(msg=>{
                             if(msg.from===userid){
@@ -101,9 +101,17 @@ function Chat() {
                             }
                         })
                     }
-                    {/* </QueueAnim>     */}
-                </List>
-
+                </List> */}
+                {
+                    msgs.map(msg => {
+                        const position = msg.from===userid ? 'left' : 'right';
+                        const avatar = msg.from===userid ? users[userid].avatar : user.avatar;
+                        debugger
+                        return <ChatItem msg={msg} key={msg._id} position={position} avatar={avatar} />
+                    })
+                }
+                
+                {/* 聊天输入框 */}
                 <div className="am-tab-bar">
                     <Form layout='horizontal'>
                         <Form.Item
