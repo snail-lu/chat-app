@@ -16,7 +16,7 @@ const routes = [
         errorElement: <ErrorPage />,
         children: [
             {
-                path: 'message',
+                path: 'messages',
                 element: <Message />
             },
             {

@@ -5,26 +5,33 @@ import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../../redux/userSlice'
 import styles from './login.module.scss'
 
-function Login(props) {
+function Login() {
     const user = useSelector(state => state.user.userInfo)
     const [username, setUsername] = useState('user1')
     const [password, setPassword] = useState('123456')
 
     const dispatch = useDispatch()
-
     const navigate = useNavigate()
+    // 登录
     const toLogin = () => {
-        dispatch(login({ username, password }))
+        dispatch(login({ username, password })).unwrap().then(res => {
+            if(res && res.success) {
+                navigate('/messages')
+            }
+        })
     }
     
+    // 跳转注册页面
     const toRegister = () => {
         navigate('/register', true);
     }
     
+    // 输入用户名
     const handleUsernameChange = (val) => {
         setUsername(val)
     }
 
+    // 输入密码
     const handlePasswordChange = (val) => {
         setPassword(val)
     }

@@ -101,7 +101,7 @@ export const userSlice = createSlice({
                 const result = action.payload;
                 if(result.code===200){
                     //分发授权成功的action
-                    state.userInfo = { ...result.result, redirecTo: '/friends' }
+                    state.userInfo = { ...result.result, redirecTo: '/messages' }
                 }else{
                     //失败
                     //分发错误提示信息的同步action

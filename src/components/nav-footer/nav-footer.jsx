@@ -16,7 +16,7 @@ export default function NavFooter(props) {
 
     const tabs = [
         {
-            key: '/message',
+            key: '/messages',
             title: '消息',
             icon: (active) => active ? <MessageFill /> : <MessageOutline />,
             text: '消息',
