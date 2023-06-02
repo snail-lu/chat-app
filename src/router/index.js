@@ -5,7 +5,7 @@ import Main from '../containers/main/main';
 import ErrorPage from '../components/error-page/error-page';
 import Message from '../containers/message/message';
 import Friends from '../containers/friends/friends';
-import Discover from '../containers/friends/friends';
+import Discover from '../containers/discover/discover';
 import Personal from '../containers/personal/personal';
 
 
