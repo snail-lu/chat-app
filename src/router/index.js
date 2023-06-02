@@ -6,7 +6,7 @@ import ErrorPage from '../components/error-page/error-page';
 import Message from '../containers/message/message';
 import Friends from '../containers/friends/friends';
 import Discover from '../containers/discover/discover';
-import Personal from '../containers/personal/personal';
+import My from '../containers/my/my';
 
 
 const routes = [
@@ -28,8 +28,8 @@ const routes = [
                 element: <Discover />
             },
             {
-                path: 'personal',
-                element: <Personal />
+                path: 'my',
+                element: <My />
             }
         ]
     }, 

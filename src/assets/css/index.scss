@@ -34,3 +34,13 @@ body {
     padding-right: 15px;
     text-align: right;
 }
+
+/* flex容器 */
+.flex-box-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-v-center {
+    align-items: center
+}

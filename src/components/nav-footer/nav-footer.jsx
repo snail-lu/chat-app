@@ -34,7 +34,7 @@ export default function NavFooter(props) {
             text: '发现'
         },
         {
-            key: '/personal',
+            key: '/my',
             title: '我的',
             icon: <UserOutline />,
             text: '我'
