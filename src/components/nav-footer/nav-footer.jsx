@@ -4,8 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   AppOutline,
   MessageOutline,
-  MessageFill,
-  UnorderedListOutline,
+  PhonebookOutline,
   UserOutline,
 } from 'antd-mobile-icons'
 
@@ -18,14 +17,14 @@ export default function NavFooter(props) {
         {
             key: '/messages',
             title: '消息',
-            icon: (active) => active ? <MessageFill /> : <MessageOutline />,
+            icon: <MessageOutline />,
             text: '消息',
             badge: '10',
         },
         {
             key: '/friends',
             title: '通讯录',
-            icon: <UnorderedListOutline />,
+            icon: <PhonebookOutline />,
             text: '通讯录'
         },
         {
