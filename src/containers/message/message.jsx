@@ -34,7 +34,7 @@ export default function Message() {
                                     />
                                 }
                                 key={msg._id}
-                                onClick={() => navigate(`/chat/${targetId}`)}
+                                onClick={() => navigate(`/chat/${msg.chat_id}`)}
                                 description={msg.content}
                             >
                                 {targetUser.username}

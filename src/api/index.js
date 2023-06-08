@@ -21,7 +21,10 @@ export const reqUser = ()=>request('/api/user/detail');
 export const reqUserList = ()=>request('/api/user/list',{},'POST');
 
 //获取消息列表
-export const reqChatList = ()=>request('/api/chat/msglist');
+export const reqChatList = ()=>request('/api/chat/list');
+
+// 获取会话详情
+export const reqChatDetail = ({ chat_id })=>request('/api/chat/detail', { chat_id }, 'POST');
 
 //修改指定消息为已读
 export const reqReadMsg = (from)=>request('/api/chat/readmsg',{from},'POST')

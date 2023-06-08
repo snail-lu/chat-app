@@ -9,8 +9,8 @@ import store from './redux/store';
 import routes from './router/index'
 
 import { Provider } from 'react-redux';
+import App from './App'
 import './assets/css/index.scss';
-// import 'antd-mobile-v2/dist/antd-mobile.css';
 
 // import './test/socketio_test'
 const root = createRoot(document.getElementById('root'));
@@ -18,7 +18,9 @@ const router = createHashRouter(routes)
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <RouterProvider router={router} />
+            <App>
+                <RouterProvider router={router} />
+            </App>
         </Provider>
     </React.StrictMode>
 );
