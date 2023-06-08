@@ -13,9 +13,9 @@ function Chat() {
     const [isShow, setIsShow] = useState(false)
 
     const { userid } = useParams()
-    const user = useSelector(state => state.user.userInfo)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const user = useSelector(state => state.user.userInfo)
     const handleSend = () => {
         const to = userid;
         const from = user._id;
