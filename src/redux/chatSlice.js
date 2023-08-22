@@ -60,11 +60,14 @@ export const chatSlice = createSlice({
         
         receiveMsg: (state, action) => {
             const { chatMsg, userid } = action.payload;
-            state = {
-                users: state.users,
-                chatMsgs: [...state.chatMsgs, chatMsg],
-                unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===userid?1:0)
-            }
+            console.log(chatMsg, userid, '收到了消息')
+            state.chatMsgs = [...state.chatMsgs, chatMsg]
+            state.unReadCount = state.unReadCount + (!chatMsg.read&&chatMsg.to===userid?1:0)
+            // state = {
+            //     users: state.users,
+            //     chatMsgs: [...state.chatMsgs, chatMsg],
+            //     unReadCount: state.unReadCount + (!chatMsg.read&&chatMsg.to===userid?1:0)
+            // }
         },
         
         msgRead: (state, action) => {

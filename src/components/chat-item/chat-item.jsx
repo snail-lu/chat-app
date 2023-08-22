@@ -4,7 +4,7 @@ import styles from './chat-item.module.scss';
 export default function ChatItem(props) {
     const { msg, position, avatar } = props;
     return (
-        <div className="flex-box">
+        <div className={'flex-box ' + (position === 'left'?'flex-h-start ': 'flex-h-end ') + styles['chat-item']}>
             {
                 position==='left' && 
                 <Image
@@ -16,6 +16,16 @@ export default function ChatItem(props) {
             />
             }
             <div className={styles['msg-box']}>{msg.content}</div>
+            {
+                position==='right' && 
+                <Image
+                src={require(`../../assets/images/${avatar}.png`)}
+                width={48}
+                height={48}
+                fit='cover'
+                style={{ borderRadius: 32 }}
+            />
+            }
         </div>
     )
 }

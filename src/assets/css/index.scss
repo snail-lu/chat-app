@@ -8,14 +8,6 @@ body {
     font-size: 18px;
 }
 
-//导航栏位于底部
-.am-tab-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: inherit !important;
-}
-
 //顶部导航栏
 .stick-top {
     z-index: 10;
@@ -46,5 +38,17 @@ body {
 }
 
 .flex-v-center {
-    align-items: center
+    align-items: center;
+}
+
+.flex-h-start {
+    justify-content: flex-start;
+}
+
+.flex-h-end {
+    justify-content: flex-end;
+}
+
+.flex-item-1 {
+    flex: 1;
 }
