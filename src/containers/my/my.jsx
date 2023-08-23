@@ -31,7 +31,7 @@ export default function My() {
                     height={80}
                 />
                 <div style={{ fontSize: 22, marginBottom: 40 }}>{username}</div>
-                <Button block shape='rounded' color='primary' style={{ width: '60%' }} onClick={handleLogout}>退出登录</Button>
+                <Button block shape='rounded' color='primary' style={{ width: '80%' }} onClick={handleLogout}>退出登录</Button>
             </div>
         </div>
     );
