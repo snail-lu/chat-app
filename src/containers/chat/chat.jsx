@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { List, NavBar, Input, Grid, Form } from 'antd-mobile';
+import { NavBar, Input, Grid, Form } from 'antd-mobile';
 import { RightOutline } from 'antd-mobile-icons'
 import { useSelector, useDispatch } from 'react-redux';
-import { sendMsg, readMsg } from '../../redux/chatSlice';
+import { sendMsg, readMsg, getMsgList } from '../../redux/chatSlice';
 import QueueAnim from 'rc-queue-anim';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './chat.module.scss'
@@ -30,9 +30,9 @@ function Chat() {
         const show = !isShow;
         setIsShow(show)
         if (show) {
-            setTimeout(() => {
-                window.dispatchEvent(new Event('resize'))
-            }, 0)
+            // setTimeout(() => {
+            //     window.dispatchEvent(new Event('resize'))
+            // }, 0)
         }
     }
 
@@ -52,6 +52,10 @@ function Chat() {
         }
     };
     useEffect(() => {
+        dispatch(getMsgList(user._id))
+    }, [])
+
+    useEffect(() => {
         scrollToBottom()
 
         //发请求，将未读消息状态更换为已读
@@ -65,7 +69,7 @@ function Chat() {
     const msgs = chatMsgs.filter(msg => msg.chat_id === chatId);
     // const targetIcon = users[userid].avatar ? require(`../../assets/images/${users[userid].avatar}.png`):null;
     return (
-        <div className={'flex-box-column ' + styles['chat-page']}>
+        users[userid] && <div className={'flex-box-column ' + styles['chat-page']}>
             <NavBar
                 icon={<RightOutline />}
                 onBack={() => navigate(-1)}

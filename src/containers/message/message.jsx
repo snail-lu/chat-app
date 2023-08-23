@@ -1,13 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { List, Badge, NavBar, Image } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 import { getLastMsgs } from '../../utils/index';
+import { getMsgList } from '../../redux/chatSlice';
+import { useEffect } from 'react';
 
 export default function Message() {
     const user = useSelector(state => state.user.userInfo)
     const { users, chatMsgs } = useSelector(state => state.chat);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(getMsgList(user._id))
+    }, [])
+
+    
+
 
     //对chatMsgs按chat_id进行分组，属于同一个会话的集合到一起
     const clonedChatMsgs = JSON.parse(JSON.stringify(chatMsgs))

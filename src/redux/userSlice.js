@@ -75,7 +75,7 @@ export const userSlice = createSlice({
         resetUser: (state, action) => {
             state.userInfo = {
                 username: '',
-                msg: action.payload,
+                // msg: action.payload,
                 avatar: '',
                 redirecTo: ''
             }

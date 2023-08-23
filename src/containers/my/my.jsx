@@ -1,30 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Result, Button, Space, Modal, NavBar, Image } from 'antd-mobile';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Dialog, NavBar, Image } from 'antd-mobile';
 import Cookies from 'js-cookie';
-import { resetUser } from '../../redux/actions'
+import { resetUser } from '../../redux/userSlice'
 
 export default function My() {
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user.userInfo)
-    const handleLogout = ()=>{
-        Modal.alert('退出','确认退出登录吗？',[
-            {
-                text: '取消',
-                onPress: ()=>console.log('cancel')
-            },
-            {
-                text: '确认',
-                onPress: ()=>{
-                    // 清除cookie
-                    Cookies.remove('userid');
+    const handleLogout = async () => {
+        const confirm = await Dialog.confirm({
+            content: '确认退出登录吗？'
+        })
+        if (confirm) {
+            // 清除cookie
+            Cookies.remove('userid');
 
-                    //重置redux中的user状态
-                    this.props.resetUser();
-                }
-            }
-        ])
+            // 重置redux中的user状态
+            dispatch(resetUser());
+        } else {}
     }
-    const {username, avatar} = user;
+    const { username, avatar } = user;
     return (
         <div>
             <NavBar className="stick-top" backArrow={false}>个人中心</NavBar>

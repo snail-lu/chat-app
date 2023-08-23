@@ -9,7 +9,7 @@ function App({ children }) {
     dispatch(getUser()).unwrap().then(res => {
         const { _id } = res.result;
         initIO(_id)
-        dispatch(getMsgList(_id))
+        // dispatch(getMsgList(_id))
     })
 
 
