@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { List, Input as _Input, Space, Radio, Button, Toast, Checkbox } from 'antd-mobile'
+import { List, Input, Space, Button, Toast, Checkbox, Form } from 'antd-mobile'
 import { redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../redux/actions'
@@ -9,27 +9,25 @@ import HeaderSelector from '../../components/header-selector/header-selector';
 
 const ListItem = List.Item;
 
-
-const Input = addErrorExplanation(_Input);
-
-function Register(props) {
+function Register() {
     const [avatar, setAvatar] = useState('')
     const [registerAgree, setRegisterAgree] = useState(false)
     const navigate = useNavigate()
+    const [form] = Form.useForm()
 
     //  注册事件
     const toRegister = () => {
-        props.form.validateFields(async (errors, value) => {
-            if(value.password !== value.password2){
-                Toast.show('两次密码输入不一致！')
-            }else if(!registerAgree) { 
-                Toast.show('请勾选用户协议！')
-            }
-            else if (errors === null && registerAgree) {
-                const params = { ...value, avatar }
-                register(params)
-            }
-          });
+        // form.validateFields(async (errors, value) => {
+        //     if (value.password !== value.password2) {
+        //         Toast.show('两次密码输入不一致！')
+        //     } else if (!registerAgree) {
+        //         Toast.show('请勾选用户协议！')
+        //     }
+        //     else if (errors === null && registerAgree) {
+        //         const params = { ...value, avatar }
+        //         register(params)
+        //     }
+        // });
     }
 
     // 跳转登录页面
@@ -53,52 +51,45 @@ function Register(props) {
         setAvatar(avatar)
     }
 
-        const { msg, redirectTo } = this.props.user;
-        const { getFieldDecorator } = this.props.form;
+    // const { msg, redirectTo } = props.user;
+    // const { getFieldDecorator } = props.form;
 
-        if(redirectTo){
-            return redirect(redirectTo)
-        }
-        return (
-            <div>
-                <Space size="xl" />
-                <h2 className={styles.top_title}>注册CHAT</h2>
-                <Space size="xl" />
-                <div className={styles.content_box}>
-                    <List>
-                        {msg? <div className="error-msg">{msg}</div>:null}
-                        <Space />
-
-                        { getFieldDecorator("username", {
-                            rules: [{ required: true, message: "用户名不可为空"},]
-                        })(<Input placeholder="请输入用户名">用户名：</Input>)}
-
-                        { getFieldDecorator("password", {
-                            rules: [{ required: true, message: "密码不可为空"},]
-                        })(<Input placeholder="请输入密码">密&nbsp;&nbsp;&nbsp;码：</Input>)}
-                        { getFieldDecorator("password2", {
-                            rules: [{ required: true, message: "确认密码不可为空"},]
-                        })(<Input placeholder="请输入确认密码">确认密码：</Input>)}
-
-                        <Space />
-
-                        <HeaderSelector setHeader={this.setHeader}/>
-
-                        <Button type="primary" size="small" onClick={toRegister}>注册</Button>
-                        <Space size="lg"/>
-                        <div className={styles.footer_link}>
-                            {/* <input type="checkbox" className={styles.agreement_btn} onChange={val=>this.handleChange('registerAgree', val)} /> */}
-                            <Checkbox onChange={val=> handleChange('registerAgree', val.target.checked)} />
-                            我已同意
-                            <span className={styles.login_btn} onClick={showAgreement}>用户协议及隐私政策&nbsp;&nbsp;</span>
-                            <span className={styles.login_btn} onClick={toLogin}>直接登录</span>
-                        </div>
-                        <Space size="xl"/>       
-                    </List>
+    // if (redirectTo) {
+    //     return redirect(redirectTo)
+    // }
+    return (
+        <div className={styles['register-container']}>
+            <h2 className={styles.top_title}>注册CHAT</h2>
+                <Form
+                    layout="horizontal"
+                form={form}
+                style={{ margin: '20px 0'}}
+                    initialValues={{
+                        a: 'aaa',
+                        b: [],
+                    }}
+                >
+                    <Form.Item name='username' label='用户名'>
+                        <Input placeholder='请输入' />
+                    </Form.Item>
+                    <Form.Item name='a' label='密码'>
+                        <Input placeholder='请输入' />
+                    </Form.Item>
+                    <Form.Item name='a' label='确认密码'>
+                        <Input placeholder='请输入' />
+                    </Form.Item>
+                </Form>
+                <Button block shape='rounded' color='primary' onClick={toRegister}>注册</Button>
+                <div className={`flex-box flex-h-center flex-v-center ${styles.footer_link}`}>
+                    {/* <input type="checkbox" className={styles.agreement_btn} onChange={val=>this.handleChange('registerAgree', val)} /> */}
+                    <Checkbox onChange={val => handleChange('registerAgree', val.target.checked)} />
+                    我已同意
+                    <span className={styles.login_btn} onClick={showAgreement}>用户协议及隐私政策&nbsp;&nbsp;</span>
+                    <span className={styles.login_btn} onClick={toLogin}>直接登录</span>
                 </div>
-            </div>
-        );
-   
+        </div >
+    );
+
 }
 
 export default create()(Register)

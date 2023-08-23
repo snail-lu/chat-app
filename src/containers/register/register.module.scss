@@ -1,20 +1,14 @@
+.register-container {
+    padding: 0 24px;
+}
 .top_title {
     color: #108ee9;
     text-align: center;
     font-weight: normal;
 }
 
-.content_box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-}
-
 .footer_link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 20px;
 
     .login_btn {
         color: #108ee9;
@@ -32,31 +26,29 @@
     }
 }
 
-:global {
-    .register-radio {
-        padding: 0 15px;
-        .am-radio {
-            padding: 2.5px;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        .am-radio-checked {
-            border: 1px solid #108ee9;
-        }
+.register-radio {
+    padding: 0 15px;
+    .am-radio {
+        padding: 2.5px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        margin-right: 5px;
     }
+    .am-radio-checked {
+        border: 1px solid #108ee9;
+    }
+}
 
-    .register_agree {
-        .am-checkbox-agree-label {
-            font-size: 12px;
-            .am-checkbox {
-                width: 20px;
-                height: 20px;
-            }
+.register_agree {
+    .am-checkbox-agree-label {
+        font-size: 12px;
+        .am-checkbox {
+            width: 20px;
+            height: 20px;
         }
     }
-    .form-error-explain {
-        display: block;
-        text-align: center;
-    }
+}
+.form-error-explain {
+    display: block;
+    text-align: center;
 }
