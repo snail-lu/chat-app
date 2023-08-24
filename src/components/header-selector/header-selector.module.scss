@@ -1,0 +1,11 @@
+.icon {
+    border: 1px solid transparent;
+    &-name {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    &-selected {
+        border: 1px solid #666;
+    }
+}

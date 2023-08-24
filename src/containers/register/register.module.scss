@@ -7,48 +7,29 @@
     font-weight: normal;
 }
 
-.footer_link {
-    margin-top: 20px;
+.eye {
+    padding: 4px;
+    cursor: pointer;
+    svg {
+        display: block;
+        font-size: var(--adm-font-size-7);
+    }
+}
 
+.agreement_box {
+    margin-top: 20px;
+    font-size: 13px;
+
+    .agreement_btn {
+        color: #108ee9;
+    }
+}
+
+.login_link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
     .login_btn {
         color: #108ee9;
-        font-size: 12px;
     }
-    .agreement_btn {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: white;
-        margin-right: 5px;
-    }
-    .agreement_btn:checked {
-        background: #108ee9;
-    }
-}
-
-.register-radio {
-    padding: 0 15px;
-    .am-radio {
-        padding: 2.5px;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        margin-right: 5px;
-    }
-    .am-radio-checked {
-        border: 1px solid #108ee9;
-    }
-}
-
-.register_agree {
-    .am-checkbox-agree-label {
-        font-size: 12px;
-        .am-checkbox {
-            width: 20px;
-            height: 20px;
-        }
-    }
-}
-.form-error-explain {
-    display: block;
-    text-align: center;
 }

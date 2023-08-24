@@ -1,39 +1,46 @@
-import React, { Component } from 'react';
-import {List,Grid} from 'antd-mobile'
+import React from 'react';
+import { Grid, Image } from 'antd-mobile'
+import { useState } from 'react';
+import styles from './header-selector.module.scss';
 
-class HeaderSelector extends Component {
-    constructor(props){
-        super(props);
-        this.headerList = [];
-        this.state = {
-            icon: null
-        }
-        for(let i=0;i<20;i++){
-            this.headerList.push({
-                text: '头像'+(i+1),
-                icon: require(`../../assets/images/头像${i+1}.png`)
-            })
-        }
+function HeaderSelector(props) {
 
+    let headerList = [];
+    for (let i = 0; i < 20; i++) {
+        headerList.push({
+            id: i,
+            text: '头像' + (i + 1),
+            icon: require(`../../assets/images/头像${i + 1}.png`)
+        })
     }
-    handleClick = ({text,icon})=>{
-        this.setState({icon})
-        this.props.setHeader(text)
+
+    const [icon, setIcon] = useState(0)
+    const handleClick = ({ text, id }) => {
+        setIcon(id)
+        props.setHeader(text)
     }
-    render() {
-        const {icon} = this.state
-        const headerTitle = !icon?'请选择头像':(
-            <div>
-                请选择头像：<img src={icon} alt="headerpic" />
-            </div>
-        );
-        const hasLine = true;
-        return (
-            <List renderHeader={()=>headerTitle}>
-                <Grid data={this.headerList} columnNum={5} hasLine={hasLine} onClick={this.handleClick}></Grid>
-            </List>
-        );
-    }
+    return (
+        <div>
+            <Grid columns={4} gap={10}>
+                {
+                    headerList.map((item) => {
+                        return (
+                            <Grid.Item>
+                                <div className={`flex-box-column flex-v-center ${item.id === icon ? styles['icon-selected'] : styles['icon']}`} onClick={() => handleClick(item)}>
+                                    <Image src={item.icon}
+                                        style={{ borderRadius: 20, width: '100%' }}
+                                        fit='cover'
+                                    />
+                                    <div className={styles['icon-name']}>{item.text}</div>
+                                </div>
+                            </Grid.Item>
+                        )
+                    })
+                }
+            </Grid>
+        </div>
+    );
+
 }
 
 export default HeaderSelector;
