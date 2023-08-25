@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Form, List, Input, Space, Button, Tabs } from 'antd-mobile'
-import { redirect, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { Form, List, Input, Button } from 'antd-mobile'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/userSlice'
 import styles from './login.module.scss'
+import { useEffect } from 'react'
 
 function Login() {
     const user = useSelector(state => state.user.userInfo)
@@ -16,7 +17,7 @@ function Login() {
     const toLogin = () => {
         dispatch(login({ username, password })).unwrap().then(res => {
             if (res && res.success) {
-                navigate('/messages')
+                navigate('/messages', true)
             }
         })
     }
@@ -26,10 +27,13 @@ function Login() {
         navigate('/register', true);
     }
 
-    const { msg, redirectTo } = user;
-    if (redirectTo) {
-        return redirect(redirectTo)
-    }
+    useEffect(() => {
+        // 已登录用户免登录
+        if (user && user._id) {
+            navigate('/messages', true)
+        }
+    }, [])
+
     return (
         <div className={styles['login-container']}>
             <h2 className={styles.top_title}>登录CHAT</h2>
@@ -42,7 +46,6 @@ function Login() {
                 </Form.Item>
             </Form>
             <List style={{ '--border-top': 'none', '--border-bottom': 'none', marginTop: '40px' }}>
-                {msg ? <div className="error-msg">{msg}</div> : null}
                 <Button block shape='rounded' color='primary' onClick={toLogin}>登录</Button>
                 <div className={styles.register_link}>没有账号？<span className={styles.register_btn} onClick={toRegister}>去注册</span></div>
             </List>

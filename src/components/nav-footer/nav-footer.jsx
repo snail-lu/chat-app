@@ -2,16 +2,19 @@ import React from 'react';
 import { TabBar } from 'antd-mobile';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  AppOutline,
-  MessageOutline,
-  PhonebookOutline,
-  UserOutline,
+    AppOutline,
+    MessageOutline,
+    PhonebookOutline,
+    UserOutline,
 } from 'antd-mobile-icons'
+import { useSelector } from 'react-redux';
 
 
-export default function NavFooter(props) {
+export default function NavFooter() {
     const location = useLocation()
     const navigate = useNavigate()
+    const { unReadCount } = useSelector(state => state.chat)
+    console.log(unReadCount, 'unReadCount')
 
     const tabs = [
         {
@@ -19,7 +22,7 @@ export default function NavFooter(props) {
             title: '消息',
             icon: <MessageOutline />,
             text: '消息',
-            badge: '10',
+            badge: unReadCount > 0 ? unReadCount : '',
         },
         {
             key: '/friends',
@@ -50,15 +53,7 @@ export default function NavFooter(props) {
         <TabBar activeKey={pathname} onChange={value => setRouteActive(value)}>
             {
                 tabs.map(item => (
-                    // <Item key={ item.key }
-                    //       title={ nav.text }
-                    //       badge={ nav.path==='/message'?unReadCount:0}
-                    //       icon={{ uri:require(`./images/${nav.icon}.png`)} }
-                    //       selectedIcon={{ uri:require(`./images/${nav.icon}-selected.png`) }}
-                    //       selected={ pathname===nav.path }
-                    //       onPress={ ()=> navigate(nav.path) } 
-                    // ></Item>
-                     <TabBar.Item
+                    <TabBar.Item
                         key={item.key}
                         icon={item.icon}
                         title={item.title}

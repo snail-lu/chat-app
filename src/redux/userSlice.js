@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList } from '../api'
+import { Modal } from 'antd-mobile'
 
 // 注册
 export const register = createAsyncThunk('user/register', async({ username, password, password2, avatar }) => {
@@ -49,9 +50,7 @@ export const getUserList = createAsyncThunk('userList/get', async () =>{
 const initialState = {
     userInfo: {
         username: '', // 用户名
-        msg: '',
-        avatar: '', // 头像
-        redirectTo: ''
+        avatar: '' // 头像
     },
     list: []
 }
@@ -75,9 +74,7 @@ export const userSlice = createSlice({
         resetUser: (state, action) => {
             state.userInfo = {
                 username: '',
-                // msg: action.payload,
-                avatar: '',
-                redirecTo: ''
+                avatar: ''
             }
         }
     },
@@ -90,23 +87,21 @@ export const userSlice = createSlice({
                     // getMsgList(dispatch,result.result._id);
                     //分发授权成功的action
                     state.userInfo = { ...result.result, redirecTo: '/friends' }
-                }else{
+                } else {
+                    Modal.alert({ content: '注册失败' })
                     //失败
                     //分发错误提示信息的同步action
                     // dispatch(errorMsg(result.message));
-                    state.userInfo.msg = result.result.message;
+                    // state.userInfo.msg = result.result.message;
                 }
             })
             .addCase(login.fulfilled, (state, action) => {
                 const result = action.payload;
                 if(result.code===200){
-                    //分发授权成功的action
                     state.userInfo = { ...result.result, redirecTo: '/messages' }
                 }else{
-                    //失败
-                    //分发错误提示信息的同步action
-                    // dispatch(errorMsg(result.message));
-                    state.userInfo.msg = result.result.message;
+                    // 失败
+                    Modal.alert({ content: result.message })
                 }
             })
             .addCase(update.fulfilled, (state, action) => {
