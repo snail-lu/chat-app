@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Image } from 'antd-mobile'
-import { useState } from 'react';
 import styles from './header-selector.module.scss';
 
 function HeaderSelector(props) {
@@ -8,16 +7,13 @@ function HeaderSelector(props) {
     let headerList = [];
     for (let i = 0; i < 20; i++) {
         headerList.push({
-            id: i,
             text: '头像' + (i + 1),
             icon: require(`../../assets/images/头像${i + 1}.png`)
         })
     }
 
-    const [icon, setIcon] = useState(0)
-    const handleClick = ({ text, id }) => {
-        setIcon(id)
-        props.setHeader(text)
+    const handleClick = ({ text }) => {
+        props.onChange(text)
     }
     return (
         <div>
@@ -25,10 +21,10 @@ function HeaderSelector(props) {
                 {
                     headerList.map((item) => {
                         return (
-                            <Grid.Item>
-                                <div className={`flex-box-column flex-v-center ${item.id === icon ? styles['icon-selected'] : styles['icon']}`} onClick={() => handleClick(item)}>
+                            <Grid.Item key={item.text}>
+                                <div className="flex-box-column flex-v-center" onClick={() => handleClick(item)}>
                                     <Image src={item.icon}
-                                        style={{ borderRadius: 20, width: '100%' }}
+                                        className={`${item.text === props.selected ? styles['icon-selected'] : styles['icon']}`}
                                         fit='cover'
                                     />
                                     <div className={styles['icon-name']}>{item.text}</div>

@@ -7,6 +7,7 @@ import Message from '../containers/message/message';
 import Friends from '../containers/friends/friends';
 import Discover from '../containers/discover/discover';
 import My from '../containers/my/my';
+import PersonalInfo from '../containers/personal-info/personal-info';
 
 
 const routes = [
@@ -44,6 +45,10 @@ const routes = [
     {
         path: '/chat/:userid',
         element: <Chat /> 
-    }
+    },
+    {
+        path: 'personal-info',
+        element: <PersonalInfo />
+    },
 ]
 export default routes;

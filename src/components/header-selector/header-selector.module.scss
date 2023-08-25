@@ -1,11 +1,13 @@
 .icon {
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     &-name {
         font-size: 13px;
         text-align: center;
     }
 
     &-selected {
-        border: 1px solid #666;
+        border: 2px solid #000;
+        border-radius: 50px;
+        overflow: hidden;
     }
 }

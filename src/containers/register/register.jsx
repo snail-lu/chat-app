@@ -99,7 +99,7 @@ function Register() {
                     <Input placeholder='请输入确认密码' type={password2Visible ? 'text' : 'password'} />
                 </Form.Item>
                 <Form.Item label="头像" style={{ '--padding-left': '0' }}>
-                    <HeaderSelector setHeader={setHeader} />
+                    <HeaderSelector onChange={setHeader} selected={avatar}/>
                 </Form.Item>
             </Form>
             <Button block shape='rounded' color='primary' onClick={toRegister}>注册</Button>

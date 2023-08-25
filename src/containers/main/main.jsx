@@ -38,7 +38,7 @@ function Main() {
 
     //如果user没有_id,返回null(不做任何显示)
     let path = location.pathname;
-    if (user._id && path==='/') {
+    if (user?._id && path==='/') {
         //如果有_id(证明已经存在相应的用户信息),显示到对应的界面
         path = getRedirectTo();
         return <Navigate to={path} replace={true} />
