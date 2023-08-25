@@ -19,11 +19,6 @@ function PersonalInfo() {
     useEffect(() => {
         myFormRef.current?.setFieldsValue({ username: user.username })
         setAvatar(user.avatar)
-        // dispatch(getUser()).unwrap().then(res => {
-        //     if (res && res.success) {
-        //         // navigate('/messages')
-        //     }
-        // })
     }, [])
 
     // 保存

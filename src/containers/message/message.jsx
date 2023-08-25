@@ -17,9 +17,6 @@ export default function Message() {
         dispatch(getMsgList(user._id))
     }, [])
 
-    
-
-
     //对chatMsgs按chat_id进行分组，属于同一个会话的集合到一起
     const clonedChatMsgs = JSON.parse(JSON.stringify(chatMsgs))
     const lastMsgs = getLastMsgs(clonedChatMsgs, user._id)
