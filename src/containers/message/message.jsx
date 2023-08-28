@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { List, Badge, NavBar, Image } from 'antd-mobile';
 import { useNavigate } from 'react-router-dom';
 import { getLastMsgs } from '../../utils/index';
-import { getMsgList } from '../../redux/chatSlice';
+import { getChatList } from '../../redux/chatSlice';
 import { useEffect } from 'react';
 
 export default function Message() {
@@ -14,12 +14,13 @@ export default function Message() {
 
 
     useEffect(() => {
-        dispatch(getMsgList(user._id))
+        dispatch(getChatList(user._id))
     }, [])
 
     //对chatMsgs按chat_id进行分组，属于同一个会话的集合到一起
     const clonedChatMsgs = JSON.parse(JSON.stringify(chatMsgs))
     const lastMsgs = getLastMsgs(clonedChatMsgs, user._id)
+    console.log(lastMsgs, 'lastMsgs')
     
     return (
         <div>
@@ -27,11 +28,11 @@ export default function Message() {
             <List>
                 {
                     lastMsgs.map(msg=>{
-                        const targetId = msg.to === user._id? msg.from:msg.to;
-                        const targetUser = users[targetId];
+                        const targetUserId = msg.to === user._id? msg.from:msg.to;
+                        const targetUser = users[targetUserId];
                         return (
                             <List.Item
-                                extra={<Badge text={msg.unReadCount} />}
+                                extra={msg.unReadCount ? <Badge content={msg.unReadCount} /> : ''}
                                 prefix={
                                     <Image
                                         src={targetUser.avatar ? require(`../../assets/images/${targetUser.avatar}.png`) : require(`../../assets/images/头像1.png`)}
@@ -42,7 +43,7 @@ export default function Message() {
                                     />
                                 }
                                 key={msg._id}
-                                onClick={() => navigate(`/chat/${targetId}`)}
+                                onClick={() => navigate(`/chat/${targetUserId}`)}
                                 description={msg.content}
                             >
                                 {targetUser.username}

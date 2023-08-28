@@ -43,7 +43,7 @@ const routes = [
         element: <Login />
     },
     {
-        path: '/chat/:userid',
+        path: '/chat/:targetUserId',
         element: <Chat /> 
     },
     {

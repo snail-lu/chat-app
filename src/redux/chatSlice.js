@@ -1,12 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // import { useDispatch } from 'react-redux'
 import io from 'socket.io-client'
-import { reqChatList, reqReadMsg } from '../api'
+import { reqChatList, reqReadMsg, reqChatDetail } from '../api'
 
-//异步获取消息列表函数
-export const getMsgList = createAsyncThunk('chat/getMsgList', async (userid) => {
+// 异步获取消息列表
+export const getChatList = createAsyncThunk('chat/getChatList', async (userid) => {
     initIO(userid)
     const response = await reqChatList()
+    return response.data;
+})
+
+// 获取会话详情
+export const getChatDetail = createAsyncThunk('chat/getChatDetail', async (chat_id) => {
+    const response = await reqChatDetail({ chat_id })
     return response.data;
 })
 
@@ -87,7 +93,7 @@ export const chatSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(getMsgList.fulfilled, (state, action) => {
+            .addCase(getChatList.fulfilled, (state, action) => {
                 const result = action.payload;
                 if (result.code === 200) {
                     const { users, chatMsgs, userid } = result.result;

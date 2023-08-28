@@ -44,7 +44,7 @@ export function getLastMsgs(chatMsgs, userid){
 
     //3.
     lastMsgs.sort(function(m1,m2){
-        return m2.create_time-m1.create_time;
+        return m2.create_time - m1.create_time;
     })
 
     return lastMsgs;

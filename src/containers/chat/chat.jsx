@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { NavBar, Input, Grid, Form } from 'antd-mobile';
 import { RightOutline } from 'antd-mobile-icons'
 import { useSelector, useDispatch } from 'react-redux';
-import { sendMsg, readMsg, getMsgList } from '../../redux/chatSlice';
+import { sendMsg, readMsg, getChatList } from '../../redux/chatSlice';
 import QueueAnim from 'rc-queue-anim';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './chat.module.scss'
@@ -12,18 +12,22 @@ function Chat() {
     const [content, setContent] = useState('')
     const [isShow, setIsShow] = useState(false)
 
-    const { userid } = useParams()
+    const { targetUserId } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => state.user.userInfo)
-    const { chatMsgs, users } = useSelector(state => state.chat);
+    const meId = user._id;
+    const chatId = [targetUserId, meId].sort().join("_");
+    const { users, chatMsgs } = useSelector(state => state.chat);
+    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId);
 
     console.log(user, 'user')
     const handleSend = () => {
-        const to = userid;
+        const to = targetUserId;
         const from = user._id;
         dispatch(sendMsg({ from, to, content: content.trim() }));
         setContent('')
+        dispatch(getChatList(user.id))
         // setIsShow(false)
     }
     const toggleShow = () => {
@@ -52,36 +56,30 @@ function Chat() {
         }
     };
     useEffect(() => {
-        dispatch(getMsgList(user._id))
+        dispatch(getChatList(user._id))
+        //发请求，将未读消息状态更换为已读
+        const from = targetUserId;
+        const to = user._id;
+        dispatch(readMsg({ from, to }))
     }, [])
 
     useEffect(() => {
         scrollToBottom()
-
-        //发请求，将未读消息状态更换为已读
-        const from = userid;
-        const to = user._id;
-        // dispatch(readMsg({ from, to }))
     }, [chatMsgs, isShow])
-
-    const meId = user._id;
-    const chatId = [userid, meId].sort().join("_");
-    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId);
     // const targetIcon = users[userid].avatar ? require(`../../assets/images/${users[userid].avatar}.png`):null;
     return (
-        users[userid] && <div className={'flex-box-column ' + styles['chat-page']}>
+        users[targetUserId] && <div className={'flex-box-column ' + styles['chat-page']}>
             <NavBar
                 icon={<RightOutline />}
                 onBack={() => navigate(-1)}
             >
-                {users[userid].username}
+                {users[targetUserId].username}
             </NavBar>
             <div className={ 'flex-item-1 ' + styles['chat-list']}>
                 {
                     msgs.map(msg => {
-                        const position = msg.from === userid ? 'left' : 'right';
-                        const avatar = msg.from === userid ? users[userid].avatar : user.avatar;
-                        // debugger
+                        const position = msg.from === targetUserId ? 'left' : 'right';
+                        const avatar = msg.from === targetUserId ? users[targetUserId].avatar : user.avatar;
                         return <ChatItem msg={msg} key={msg._id} position={position} avatar={avatar} />
                     })
                 }
