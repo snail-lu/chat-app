@@ -9,7 +9,7 @@ import request from './request';
 export const reqRegister = (user)=>request('/api/user/register',user,'POST')
 
 //登录接口
-export const reqLogin = ({username,password}) =>request('/api/user/login',{username,password},'POST')
+export const reqLogin = (data) => request.post('/api/user/login', data)
 
 //完善用户信息接口
 export const reqUpdateUser = (user)=>request('/api/user/update',user,'POST');
@@ -18,7 +18,7 @@ export const reqUpdateUser = (user)=>request('/api/user/update',user,'POST');
 export const reqUser = ()=>request('/api/user/detail');
 
 //获取用户列表接口
-export const reqUserList = ()=>request('/api/user/list',{},'POST');
+export const reqUserList = ()=>request.post('/api/user/list',{});
 
 //获取消息列表
 export const reqChatList = ()=>request('/api/chat/list');

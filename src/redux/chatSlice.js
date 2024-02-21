@@ -6,14 +6,23 @@ import { reqChatList, reqReadMsg, reqChatDetail } from '../api'
 // 异步获取消息列表
 export const getChatList = createAsyncThunk('chat/getChatList', async (userid) => {
     initIO(userid)
-    const response = await reqChatList()
-    return response.data;
+    try {
+        const response = await reqChatList()
+        return response;
+    } catch(e) {
+        console.log(e)
+    }
+
 })
 
 // 获取会话详情
 export const getChatDetail = createAsyncThunk('chat/getChatDetail', async (chat_id) => {
-    const response = await reqChatDetail({ chat_id })
-    return response.data;
+    try {
+        const response = await reqChatDetail({ chat_id })
+        return response;
+    } catch(e) {
+        console.log(e)
+    }
 })
 
 //发送消息
@@ -25,8 +34,13 @@ export const sendMsg = createAsyncThunk('chat/send', ({ from, to, content }) => 
 
 //读取消息
 export const readMsg = createAsyncThunk('chat/read', async ({ from, to })=>{
-    const response = await reqReadMsg(from);
-    return { from, to, count: response.data.data }
+    try {
+        const response = await reqReadMsg(from);
+        return { from, to, count: response.data }
+    } catch(e) {
+        console.log(e)
+    }
+
 })
 
 //初始化socketIO

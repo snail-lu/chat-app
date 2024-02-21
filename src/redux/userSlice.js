@@ -23,27 +23,42 @@ export const login = createAsyncThunk('user/login', async({ username, password }
         return errorMsg('请输入密码')
     }
 
-    const response = await reqLogin({ username, password });
-    return response.data
+    try {
+        const response = await reqLogin({ username, password });
+        return response
+    } catch(e) {
+        console.log(e)
+    }
+
 })
 
 
 //更新用户信息异步action
 export const update = createAsyncThunk('user/update', async (user)=>{
     const response = await reqUpdateUser(user);
-    return response.data
+    return response
 })
 
 //获取用户信息异步action
 export const getUser = createAsyncThunk('user/getUser', async () => {
-    const response = await reqUser();
-    return response.data
+    try {
+        const response = await reqUser();
+        return response
+    } catch(e) {
+        console.log(e)
+    }
+
 })
 
 //获取用户列表异步action
 export const getUserList = createAsyncThunk('userList/get', async () =>{
-    const response = await reqUserList();
-    return response.data
+    try {
+        const response = await reqUserList();
+        return response
+    } catch(e) {
+        console.log(e)
+    }
+
 })
 
 
@@ -97,21 +112,22 @@ export const userSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 const result = action.payload;
-                if(result.code===200){
+                console.log(result, 'result')
+                if(result && result.code===200){
                     state.userInfo = { ...result.result, redirecTo: '/messages' }
-                }else{
+                } else {
                     // 失败
-                    Modal.alert({ content: result.message })
+                    // Modal.alert({ content: '登录失败' })
                 }
             })
             .addCase(update.fulfilled, (state, action) => {
                 const result = action.payload;
-                if(result.code === 200){  //更新成功：data
+                if(result && result.code === 200){  //更新成功：data
                     state.userInfo = result.result
                 }else{                //更新失败：msg
                     state.userInfo = {
                         username: '',
-                        msg: result.result,
+                        msg: '',
                         avatar: '',
                         redirecTo: ''
                     }
@@ -119,14 +135,15 @@ export const userSlice = createSlice({
             })
             .addCase(getUser.fulfilled, (state, action) => {
                 const result = action.payload;
-                if(result.code === 200){  //获取成功：data
+                console.log(result, 'result')
+                if(result && result.code === 200){  //获取成功：data
                     // getMsgList(dispatch, result.result._id);
                     // dispatch(receiveUser(result.result))
                     state.userInfo = result.result;
                 }else{                //获取失败：msg
                     state.userInfo = {
                         username: '',
-                        msg: result.result,
+                        msg: '',
                         avatar: '',
                         redirecTo: ''
                     }
@@ -134,7 +151,7 @@ export const userSlice = createSlice({
             })
             .addCase(getUserList.fulfilled, (state, action) => {
                 const result = action.payload;
-                if (result.code === 200) {
+                if (result && result.code === 200) {
                     state.list = result.result
                 }
             })

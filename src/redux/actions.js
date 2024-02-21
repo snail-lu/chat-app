@@ -77,19 +77,24 @@ export const login = (user)=>{
     }
 
     return async dispatch =>{
-        //发送注册的异步ajax请求
-        const response = await reqLogin(user);
-        const data = response.data
-        if(data.code===200){
-            //成功'
-            // getMsgList(dispatch, data.result._id);
-            //分发授权成功的action
-            dispatch(authSuccess(data.result));
-        }else{
-            //失败
-            //分发错误提示信息的同步action
-            dispatch(errorMsg(data.message));
+        try {
+            //发送注册的异步ajax请求
+            const response = await reqLogin(user);
+            const data = response.data
+            if(data.code===200){
+                //成功'
+                // getMsgList(dispatch, data.result._id);
+                //分发授权成功的action
+                dispatch(authSuccess(data.result));
+            }else{
+                //失败
+                //分发错误提示信息的同步action
+                dispatch(errorMsg(data.message));
+            }
+        } catch(e) {
+            console.log(e)
         }
+
     }
 }
 
@@ -109,25 +114,35 @@ export const update = (user)=>{
 //获取用户信息异步action
 export const getUser = ()=>{
     return async dispatch =>{
-        const response = await reqUser();
-        const result = response.data
-        if(result.code===200){  //获取成功：data
-            getMsgList(dispatch, result.result._id);
-            dispatch(receiveUser(result.result))
-        }else{                //获取失败：msg
-            dispatch(resetUser(result.message))
-        }
+        try {
+            const response = await reqUser();
+            const result = response.data
+            if(result.code===200){  //获取成功：data
+                getMsgList(dispatch, result.result._id);
+                dispatch(receiveUser(result.result))
+            }else{                //获取失败：msg
+                dispatch(resetUser(result.message))
+            }
+        } catch(e) {
+            console.log(e)
+        } 
+
     }
 }
 
 //获取用户列表异步action
 export const getUserList = ()=>{
     return async dispatch =>{
-        const response = await reqUserList();
-        const result = response.data
-        if(result.code===200){  //获取成功：data
-            dispatch(receiveUserList(result.result))
+        try {
+            const response = await reqUserList();
+            const result = response.data
+            if(result.code===200){  //获取成功：data
+                dispatch(receiveUserList(result.result))
+            }
+        } catch(e) {
+            console.log(e)
         }
+
     }
 }
 
